@@ -1,0 +1,661 @@
+/* ═══════════════════════════════════════════════════════════════════
+   Student Management System — subjects.css
+   Subject Management Page — mirrors student_page.css design tokens.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── CSS Variables ─────────────────────────────────────────────── */
+:root {
+    --body-bg: radial-gradient(circle at top left, rgba(37, 99, 235, 0.10), transparent 24%),
+    linear-gradient(180deg, #f8fbff 0%, #eef4fa 100%);
+    --text-primary:    #0f172a;
+    --text-secondary:  #475569;
+    --surface-primary: rgba(255, 255, 255, 0.94);
+    --surface-solid:   #ffffff;
+    --surface-muted:   #f8fafc;
+    --border-soft:     rgba(148, 163, 184, 0.35);
+    --border-strong:   #94a3b8;
+    --border-darker:   #64748b;
+    --shadow-primary:  0 18px 40px rgba(15, 23, 42, 0.08);
+    --shadow-modal:    0 24px 56px rgba(15, 23, 42, 0.20);
+    --panel-badge-bg:  #ecfdf5;
+    --panel-badge-text:#047857;
+    --section-label:   #2563eb;
+
+    --divider-color:   #94a3b8;
+    --accent-stripe:   linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    --table-head-bg:   #f1f5f9;
+    --table-row-hover: #f1f5f9;
+    --table-border:    #cbd5e1;
+    --table-border-strong: #94a3b8;
+    --badge-bg:        #dbeafe;
+    --badge-text:      #1d4ed8;
+
+    --label-color:     #475569;
+    --input-bg:        #f8fafc;
+    --input-border:    #94a3b8;
+    --input-focus:     #2563eb;
+
+    /* button palette */
+    --btn-primary-bg:    #2563eb;
+    --btn-primary-fg:    #ffffff;
+    --btn-primary-hover: #1d4ed8;
+    --btn-danger-bg:     #ef4444;
+    --btn-danger-fg:     #ffffff;
+    --btn-danger-hover:  #dc2626;
+    --btn-ghost-bg:      transparent;
+    --btn-ghost-fg:      var(--text-secondary);
+    --btn-ghost-border:  #94a3b8;
+    --btn-ghost-hover:   #f1f5f9;
+
+    /* modal */
+    --backdrop-bg:  rgba(15, 23, 42, 0.55);
+    --modal-bg:     var(--surface-solid);
+    --modal-border: #94a3b8;
+    --card-border:  #94a3b8;
+
+    /* misc */
+    --error-color:  #ef4444;
+    --error-bg:     #fef2f2;
+    --error-border: #fca5a5;
+
+    /* navbar height tokens — adjust here if navbar changes */
+    --navbar-height-desktop: 68px;
+    --navbar-height-mobile:  140px;
+}
+
+:root[data-theme='dark'] {
+    --body-bg: radial-gradient(circle at top left, rgba(59, 130, 246, 0.18), transparent 26%),
+    linear-gradient(180deg, #0f172a 0%, #111827 100%);
+    --text-primary:    #e2e8f0;
+    --text-secondary:  #94a3b8;
+    --surface-primary: rgba(15, 23, 42, 0.92);
+    --surface-solid:   #111827;
+    --surface-muted:   #1e293b;
+    --border-soft:     rgba(148, 163, 184, 0.25);
+    --border-strong:   #475569;
+    --border-darker:   #334155;
+    --shadow-primary:  0 18px 40px rgba(2, 6, 23, 0.35);
+    --shadow-modal:    0 24px 56px rgba(2, 6, 23, 0.55);
+    --panel-badge-bg:  rgba(16, 185, 129, 0.18);
+    --panel-badge-text:#6ee7b7;
+    --section-label:   #60a5fa;
+
+    --divider-color:   #475569;
+    --accent-stripe:   linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    --table-head-bg:   #1e293b;
+    --table-row-hover: rgba(59, 130, 246, 0.08);
+    --table-border:    #334155;
+    --table-border-strong: #475569;
+    --badge-bg:        rgba(37, 99, 235, 0.18);
+    --badge-text:      #93c5fd;
+
+    --label-color:     #94a3b8;
+    --input-bg:        #1e293b;
+    --input-border:    #475569;
+    --input-focus:     #60a5fa;
+
+    --btn-primary-bg:    #3b82f6;
+    --btn-primary-hover: #2563eb;
+    --btn-ghost-bg:      transparent;
+    --btn-ghost-fg:      #94a3b8;
+    --btn-ghost-border:  #475569;
+    --btn-ghost-hover:   #1e293b;
+
+    --backdrop-bg:  rgba(2, 6, 23, 0.75);
+    --modal-bg:     #1e293b;
+    --modal-border: #475569;
+    --card-border:  #475569;
+
+    --error-color:  #f87171;
+    --error-bg:     rgba(239, 68, 68, 0.12);
+    --error-border: rgba(239, 68, 68, 0.30);
+}
+
+/* ── Reset ─────────────────────────────────────────────────────── */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ── Body ──────────────────────────────────────────────────────── */
+body {
+    margin-top: var(--navbar-height-desktop);
+    min-height: 100vh;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--body-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* ── Logout commandLink — match nav-list <a> style ─────────────── */
+.logout {
+    text-decoration: none;
+    color: var(--nav-text, white) !important;
+    padding: 12px 22px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+}
+
+.logout:hover {
+    background: rgba(255, 255, 255, 0.18) !important;
+    backdrop-filter: blur(10px);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+}
+
+/* ── Page wrapper ──────────────────────────────────────────────── */
+.dashboard-wrapper {
+    max-width: 1080px;
+    margin: 0 auto 64px;
+    padding: 48px 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* ── Flash messages ────────────────────────────────────────────── */
+.flash-message {
+    display: block;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    background: #f0fdf4;
+    border: 1.5px solid #6ee7b7;
+    color: #166534;
+    transition: background 0.3s ease;
+}
+
+:root[data-theme='dark'] .flash-message {
+    background: rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.3);
+    color: #6ee7b7;
+}
+
+/* ── Generic card ──────────────────────────────────────────────── */
+.dashboard-card {
+    position: relative;
+    background: var(--surface-primary);
+    border: 1.5px solid var(--card-border);
+    border-radius: 14px;
+    box-shadow: var(--shadow-primary);
+    padding: 0 0 32px;
+    overflow: hidden;
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-card::before {
+    content: '';
+    display: block;
+    height: 5px;
+    background: var(--accent-stripe);
+    border-radius: 14px 14px 0 0;
+}
+
+/* ── Card header ───────────────────────────────────────────────── */
+.card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 32px 40px 6px;
+    flex-wrap: wrap;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--divider-color);
+}
+
+.card-title {
+    font-size: 24px;
+    font-weight: 750;
+    line-height: 1.2;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.card-subtitle {
+    margin-top: 6px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* Remove PrimeFaces / JSF default form spacing around commandButton */
+.header-right form {
+    display: inline-flex;
+}
+
+.total-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 30px;
+    padding: 0 14px;
+    border-radius: 999px;
+    background-color: var(--panel-badge-bg);
+    color: var(--panel-badge-text);
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    border: 1.5px solid var(--card-border);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.card-divider {
+    margin: 24px 40px;
+    height: 2px;
+    background: var(--divider-color);
+    transition: background 0.3s ease;
+}
+
+/* ── Table wrapper ─────────────────────────────────────────────── */
+.table-scroll {
+    margin: 0 40px;
+    overflow-x: auto;
+    border: 1.5px solid var(--table-border-strong);
+    border-radius: 10px;
+    transition: border-color 0.3s ease;
+}
+
+/* Remove default JSF form padding inside table */
+.table-scroll form {
+    display: contents;
+}
+
+/* ── Table ─────────────────────────────────────────────────────── */
+.subjects-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: var(--surface-solid);
+    transition: background 0.3s ease;
+}
+
+.subjects-table th,
+.subjects-table td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1.5px solid var(--table-border);
+    transition: border-color 0.3s ease, color 0.3s ease, background-color 0.3s ease;
+}
+
+.subjects-table thead th {
+    background: var(--table-head-bg);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 2.5px solid var(--table-border-strong);
+}
+
+.subjects-table tbody tr {
+    color: var(--text-primary);
+}
+
+.subjects-table tbody tr:hover {
+    background-color: var(--table-row-hover);
+}
+
+.subjects-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.col-serial { width: 56px; }
+.col-action { width: 110px; }
+
+.cell-serial {
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+.cell-code {
+    font-weight: 700;
+    color: var(--section-label);
+    transition: color 0.3s ease;
+}
+
+.cell-name {
+    font-weight: 600;
+}
+
+/* JSF wraps buttons in a form; remove default button appearance */
+.subjects-table form {
+    display: contents;
+}
+
+/* ── Empty state ───────────────────────────────────────────────── */
+.empty-state {
+    padding: 48px 16px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 15px;
+    transition: color 0.3s ease;
+}
+
+/* ── Buttons ───────────────────────────────────────────────────── */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 18px;
+    height: 38px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: background-color 0.18s ease, color 0.18s ease,
+    border-color 0.18s ease, box-shadow 0.18s ease;
+    white-space: nowrap;
+    text-decoration: none;
+    /* Reset browser default button styles */
+    appearance: none;
+    -webkit-appearance: none;
+    line-height: 1;
+}
+
+.btn:focus-visible {
+    outline: 2px solid var(--input-focus);
+    outline-offset: 2px;
+}
+
+.btn-primary {
+    background: var(--btn-primary-bg);
+    color: var(--btn-primary-fg);
+}
+.btn-primary:hover {
+    background: var(--btn-primary-hover);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28);
+}
+
+.btn-danger {
+    background: var(--btn-danger-bg);
+    color: var(--btn-danger-fg);
+}
+.btn-danger:hover {
+    background: var(--btn-danger-hover);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.28);
+}
+
+.btn-ghost {
+    background: var(--btn-ghost-bg);
+    color: var(--btn-ghost-fg);
+    border-color: var(--btn-ghost-border);
+}
+.btn-ghost:hover {
+    background: var(--btn-ghost-hover);
+    border-color: var(--border-darker);
+}
+
+.btn-sm {
+    height: 30px;
+    padding: 0 12px;
+    font-size: 12px;
+    border-radius: 6px;
+}
+
+/* ── Modal backdrop ────────────────────────────────────────────── */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: var(--backdrop-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+    backdrop-filter: blur(3px);
+    animation: fadeIn 0.18s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* ── Modal box ─────────────────────────────────────────────────── */
+.modal {
+    background: var(--modal-bg);
+    border: 1.5px solid var(--modal-border);
+    border-radius: 14px;
+    box-shadow: var(--shadow-modal);
+    width: 100%;
+    max-width: 500px;
+    overflow: hidden;
+    animation: slideUp 0.2s ease;
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.modal-sm {
+    max-width: 380px;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 28px 20px;
+    border-bottom: 2px solid var(--modal-border);
+    transition: border-color 0.3s ease;
+}
+
+.modal-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+/* Close × button */
+.modal-close {
+    background: none;
+    border: 1.5px solid var(--modal-border);
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    font-family: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+}
+.modal-close:hover {
+    background: var(--surface-muted);
+    color: var(--text-primary);
+    border-color: var(--border-darker);
+}
+
+.modal-body {
+    padding: 24px 28px;
+}
+
+.modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 16px 28px 24px;
+    border-top: 2px solid var(--modal-border);
+    transition: border-color 0.3s ease;
+}
+
+/* Remove JSF form default display inside modal */
+.modal-footer form  { display: contents; }
+.modal-header form  { display: contents; }
+.modal-body   form  { display: contents; }
+
+/* ── Form fields inside modal ──────────────────────────────────── */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 18px;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+.form-group label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--label-color);
+    transition: color 0.3s ease;
+}
+
+.req {
+    color: var(--error-color);
+    margin-left: 2px;
+}
+
+.form-input {
+    width: 100%;
+    height: 44px;
+    padding: 0 14px;
+    border: 1.5px solid var(--input-border);
+    border-radius: 8px;
+    background: var(--input-bg);
+    color: var(--text-primary);
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.18s ease, background 0.3s ease,
+    box-shadow 0.18s ease, color 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--input-focus);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+:root[data-theme='dark'] .form-input:focus {
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.20);
+}
+
+.form-input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+
+/* ── Field error (JSF h:message) ───────────────────────────────── */
+.field-error {
+    font-size: 12px;
+    color: var(--error-color);
+    font-weight: 500;
+    display: block;
+    margin-top: 2px;
+}
+
+/* ── Duplicate code error box ──────────────────────────────────── */
+.duplicate-error {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    margin-top: 8px;
+    border: 1.5px solid var(--error-border);
+    border-radius: 8px;
+    background: var(--error-bg);
+    font-size: 13px;
+    color: var(--error-color);
+    line-height: 1.5;
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.dup-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+/* ── Confirm dialog body ───────────────────────────────────────── */
+.confirm-body {
+    text-align: center;
+}
+
+.confirm-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+}
+
+.confirm-text {
+    font-size: 15px;
+    color: var(--text-primary);
+    line-height: 1.6;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.confirm-sub {
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+/* ── Responsive ────────────────────────────────────────────────── */
+@media (max-width: 980px) {
+    .dashboard-wrapper {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+@media (max-width: 900px) {
+    body {
+        margin-top: var(--navbar-height-mobile);
+    }
+}
+
+@media (max-width: 640px) {
+    .card-header,
+    .card-divider,
+    .table-scroll {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .card-title { font-size: 20px; }
+
+    .subjects-table th,
+    .subjects-table td {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}

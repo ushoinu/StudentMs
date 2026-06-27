@@ -1,0 +1,465 @@
+:root {
+    --body-bg:
+            radial-gradient(circle at top left, rgba(37, 99, 235, 0.10), transparent 24%),
+            linear-gradient(180deg, #f8fbff 0%, #eef4fa 100%);
+    --text-primary:     #0f172a;
+    --text-secondary:   #475569;
+    --surface-primary:  rgba(255, 255, 255, 0.94);
+    --surface-secondary:rgba(255, 255, 255, 0.92);
+    --surface-solid:    #ffffff;
+    --surface-muted:    #f8fafc;
+    --border-soft:      rgba(148, 163, 184, 0.35);
+    --border-strong:    #94a3b8;
+    --border-darker:    #64748b;
+    --shadow-primary:   0 18px 40px rgba(15, 23, 42, 0.08);
+    --shadow-secondary: 0 14px 32px rgba(15, 23, 42, 0.07);
+    --shadow-hover:     0 8px 16px rgba(15, 23, 42, 0.06);
+    --eyebrow-bg:       #dbeafe;
+    --eyebrow-text:     #1d4ed8;
+    --panel-badge-bg:   #ecfdf5;
+    --panel-badge-text: #047857;
+    --section-label:    #2563eb;
+
+    /* Form-specific tokens */
+    --input-bg:         #ffffff;
+    --input-border:     #94a3b8;
+    --input-focus-ring: rgba(37, 99, 235, 0.22);
+    --input-focus-border: #2563eb;
+    --input-placeholder:#94a3b8;
+    --btn-primary-from: #2563eb;
+    --btn-primary-to:   #1d4ed8;
+    --btn-shadow:       0 10px 24px rgba(37, 99, 235, 0.24);
+    --label-color:      #475569;
+    --divider-color:    #94a3b8;
+    --error-color:      #dc2626;
+    --error-bg:         #fef2f2;
+    --error-border:     #fca5a5;
+    --accent-stripe:    linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    --card-border:      #94a3b8;
+}
+
+:root[data-theme='dark'] {
+    --body-bg:
+            radial-gradient(circle at top left, rgba(59, 130, 246, 0.18), transparent 26%),
+            linear-gradient(180deg, #0f172a 0%, #111827 100%);
+    --text-primary:     #e2e8f0;
+    --text-secondary:   #94a3b8;
+    --surface-primary:  rgba(15, 23, 42, 0.92);
+    --surface-secondary:rgba(15, 23, 42, 0.88);
+    --surface-solid:    #111827;
+    --surface-muted:    #1e293b;
+    --border-soft:      rgba(148, 163, 184, 0.25);
+    --border-strong:    #475569;
+    --border-darker:    #334155;
+    --shadow-primary:   0 18px 40px rgba(2, 6, 23, 0.35);
+    --shadow-secondary: 0 14px 32px rgba(2, 6, 23, 0.30);
+    --shadow-hover:     0 8px 16px rgba(2, 6, 23, 0.28);
+    --eyebrow-bg:       rgba(37, 99, 235, 0.18);
+    --eyebrow-text:     #93c5fd;
+    --panel-badge-bg:   rgba(16, 185, 129, 0.18);
+    --panel-badge-text: #6ee7b7;
+    --section-label:    #60a5fa;
+
+    /* Form-specific dark overrides */
+    --input-bg:           #1e293b;
+    --input-border:       #475569;
+    --input-focus-ring:   rgba(96, 165, 250, 0.22);
+    --input-focus-border: #60a5fa;
+    --input-placeholder:  #475569;
+    --label-color:        #94a3b8;
+    --divider-color:      #475569;
+    --error-color:        #f87171;
+    --error-bg:           rgba(220, 38, 38, 0.10);
+    --error-border:       rgba(220, 38, 38, 0.30);
+    --btn-primary-from:   #3b82f6;
+    --btn-primary-to:     #2563eb;
+    --btn-shadow:         0 10px 24px rgba(59, 130, 246, 0.28);
+    --accent-stripe:      linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    --card-border:        #475569;
+}
+
+/* ── Reset ─────────────────────────────────────────────────────── */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ── Body ──────────────────────────────────────────────────────── */
+body {
+    min-height: 100vh;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--body-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* ── Page wrapper ──────────────────────────────────────────────── */
+.student-form-wrapper {
+    max-width: 680px;
+    margin: 48px auto 64px;
+    padding: 0 20px;
+}
+
+/* ── Card ──────────────────────────────────────────────────────── */
+.student-form {
+    margin-top: 100px;
+    position: relative;
+    background: var(--surface-primary);
+    border: 1.5px solid var(--card-border);
+    border-radius: 14px;
+    box-shadow: var(--shadow-primary);
+    padding: 0 0 40px;
+    overflow: hidden;
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Accent stripe at top of card */
+.student-form::before {
+    content: '';
+    display: block;
+    height: 5px;
+    background: var(--accent-stripe);
+    border-radius: 14px 14px 0 0;
+}
+
+/* ── Form header ───────────────────────────────────────────────── */
+.form-title {
+    margin: 32px 40px 6px;
+    font-size: 26px;
+    font-weight: 750;
+    line-height: 1.2;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.form-subtitle {
+    margin: 0 40px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.form-divider {
+    margin: 24px 40px 28px;
+    height: 2px;
+    background: var(--divider-color);
+    transition: background 0.3s ease;
+}
+
+/* ── Global messages (JSF validation) ─────────────────────────── */
+/* Base — shared layout for both success & error */
+.message {
+    margin: 0 40px 20px;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    list-style: none;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* ✅ Success (green) */
+.message--success {
+    background: #f0fdf4;
+    border: 1.5px solid #86efac;
+    color: #15803d;
+}
+
+/* ❌ Error (red) */
+.message--error {
+    background: var(--error-bg);
+    border: 1.5px solid var(--error-border);
+    color: var(--error-color);
+}
+
+/* Dark mode overrides */
+:root[data-theme='dark'] .message--success {
+    background: rgba(22, 163, 74, 0.12);
+    border-color: rgba(134, 239, 172, 0.30);
+    color: #86efac;
+}
+
+:root[data-theme='dark'] .message--error {
+    background: var(--error-bg);
+    border-color: var(--error-border);
+    color: var(--error-color);
+}
+
+/* ── Form groups ───────────────────────────────────────────────── */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 0 40px;
+    margin-bottom: 20px;
+}
+
+/* Two-column row */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 0 40px;
+    margin-bottom: 20px;
+}
+
+.form-row .form-group {
+    padding: 0;
+    margin-bottom: 0;
+}
+
+/* ── Labels ────────────────────────────────────────────────────── */
+.form-group label,
+.form-group output {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--label-color);
+    letter-spacing: 0.01em;
+    transition: color 0.3s ease;
+}
+
+/* ── Inputs ────────────────────────────────────────────────────── */
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="email"],
+.form-group input[type="date"],
+.form-group input[type="number"],
+.form-group input {
+    width: 100%;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1.5px solid var(--input-border);
+    border-radius: 8px;
+    background: var(--input-bg);
+    color: var(--text-primary);
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition:
+            border-color 0.2s ease,
+            box-shadow   0.2s ease,
+            background   0.3s ease,
+            color        0.3s ease;
+}
+
+.form-group input::placeholder {
+    color: var(--input-placeholder);
+    font-weight: 400;
+}
+
+.form-group input:focus {
+    border-color: var(--input-focus-border);
+    box-shadow: 0 0 0 4px var(--input-focus-ring);
+}
+
+.form-group input:hover:not(:focus) {
+    border-color: var(--border-darker);
+}
+
+/* ── Select dropdown (h:selectOneMenu) ────────────────────────── */
+.form-group select {
+    width: 100%;
+    min-height: 44px;
+    padding: 0 38px 0 14px;
+    border: 1.5px solid var(--input-border);
+    border-radius: 8px;
+    background-color: var(--input-bg);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    color: var(--text-primary);
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    transition:
+            border-color 0.2s ease,
+            box-shadow   0.2s ease,
+            background-color 0.3s ease,
+            color        0.3s ease;
+}
+
+.form-group select:focus {
+    border-color: var(--input-focus-border);
+    box-shadow: 0 0 0 4px var(--input-focus-ring);
+}
+
+.form-group select:hover:not(:focus) {
+    border-color: var(--border-darker);
+}
+
+/* Style the dropdown options (limited cross-browser) */
+.form-group select option {
+    background-color: var(--surface-solid);
+    color: var(--text-primary);
+}
+
+/* ── Password field wrapper + toggle eye icon ─────────────────── */
+.password-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-field input {
+    width: 100%;
+    padding-right: 44px !important;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 1.5px solid transparent;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: 6px;
+    flex-shrink: 0;
+    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.password-toggle:hover {
+    color: var(--text-primary);
+    background-color: var(--surface-muted);
+    border-color: var(--border-soft);
+}
+
+.password-toggle:focus-visible {
+    outline: 2px solid var(--input-focus-border);
+    outline-offset: 2px;
+    color: var(--text-primary);
+}
+
+.password-toggle-icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+}
+
+.password-toggle-icon svg {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: opacity 0.15s ease;
+}
+
+/* Default — password hidden: show eye, hide eye-off */
+.password-toggle[aria-pressed="false"] .icon-eye     { opacity: 1; }
+.password-toggle[aria-pressed="false"] .icon-eye-off { opacity: 0; }
+
+/* Revealed — password visible: show eye-off, hide eye */
+.password-toggle[aria-pressed="true"]  .icon-eye     { opacity: 0; }
+.password-toggle[aria-pressed="true"]  .icon-eye-off { opacity: 1; }
+
+/* ── Per-field validation error message ───────────────────────── */
+.field-error {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--error-color);
+    transition: color 0.3s ease;
+}
+
+/* Highlight the input/select when its field has an error */
+.form-group:has(.field-error:not(:empty)) input,
+.form-group:has(.field-error:not(:empty)) select {
+    border-color: var(--error-color);
+    border-width: 1.5px;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+}
+
+/* ── Submit button ─────────────────────────────────────────────── */
+.save-btn {
+    display: block;
+    width: calc(100% - 80px);
+    margin: 28px 40px 0;
+    min-height: 48px;
+    padding: 0 24px;
+    border: 1.5px solid transparent;
+    border-radius: 9px;
+    background: linear-gradient(135deg, var(--btn-primary-from) 0%, var(--btn-primary-to) 100%);
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: inherit;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    box-shadow: var(--btn-shadow);
+    transition:
+            background   0.2s ease,
+            box-shadow   0.2s ease,
+            transform    0.15s ease,
+            opacity      0.2s ease;
+}
+
+.save-btn:hover {
+    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+    box-shadow: 0 14px 32px rgba(37, 99, 235, 0.32);
+    transform: translateY(-1px);
+}
+
+.save-btn:active {
+    transform: translateY(0);
+    box-shadow: var(--btn-shadow);
+    opacity: 0.9;
+}
+
+/* ── Responsive ────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+    .student-form-wrapper {
+        margin-top: 24px;
+        padding: 0 12px;
+    }
+
+    .form-title,
+    .form-subtitle,
+    .form-divider,
+    .message {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .form-group {
+        padding: 0 20px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0 20px;
+    }
+
+    .save-btn {
+        width: calc(100% - 40px);
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .form-title {
+        font-size: 22px;
+    }
+}

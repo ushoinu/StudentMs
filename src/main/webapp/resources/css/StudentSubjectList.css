@@ -1,0 +1,665 @@
+/* ═══════════════════════════════════════════════════════════════════
+   Student Management System — studentSubjectList.css
+   Student-Subject Assignment Page
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── CSS Variables (mirrors student_page.css tokens) ──────────────── */
+:root {
+    --body-bg: radial-gradient(circle at top left, rgba(37, 99, 235, 0.10), transparent 24%),
+    linear-gradient(180deg, #f8fbff 0%, #eef4fa 100%);
+    --text-primary:       #0f172a;
+    --text-secondary:     #475569;
+    --surface-primary:    rgba(255, 255, 255, 0.94);
+    --surface-secondary:  rgba(255, 255, 255, 0.92);
+    --surface-solid:      #ffffff;
+    --surface-muted:      #f8fafc;
+    --border-soft:        rgba(148, 163, 184, 0.35);
+    --border-strong:      #94a3b8;
+    --border-darker:      #64748b;
+    --shadow-primary:     0 18px 40px rgba(15, 23, 42, 0.08);
+    --shadow-secondary:   0 14px 32px rgba(15, 23, 42, 0.07);
+    --shadow-hover:       0 8px 16px rgba(15, 23, 42, 0.06);
+    --panel-badge-bg:     #ecfdf5;
+    --panel-badge-text:   #047857;
+    --section-label:      #2563eb;
+
+    --divider-color:      #94a3b8;
+    --accent-stripe:      linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    --table-head-bg:      #f1f5f9;
+    --table-row-hover:    #f1f5f9;
+    --table-border:       #cbd5e1;
+    --table-border-strong:#94a3b8;
+    --badge-bg:           #dbeafe;
+    --badge-text:         #1d4ed8;
+
+    --label-color:        #475569;
+    --input-bg:           #f8fafc;
+    --input-border:       #94a3b8;
+
+    /* pill colours */
+    --pill-bg:            #eff6ff;
+    --pill-border:        #94a3b8;
+    --pill-code-color:    #1d4ed8;
+    --pill-name-color:    #1e40af;
+    --pill-remove-color:  #dc2626;
+    --pill-remove-hover:  #b91c1c;
+
+    /* button palette */
+    --btn-add-bg:         #2563eb;
+    --btn-add-hover:      #1d4ed8;
+    --btn-assign-bg:      #16a34a;
+    --btn-assign-hover:   #15803d;
+    --btn-delete-bg:      #dc2626;
+    --btn-delete-hover:   #b91c1c;
+    --btn-cancel-bg:      #f1f5f9;
+    --btn-cancel-color:   #475569;
+    --btn-cancel-hover:   #e2e8f0;
+
+    /* modal */
+    --modal-overlay-bg:   rgba(15, 23, 42, 0.55);
+    --modal-bg:           #ffffff;
+    --modal-shadow:       0 24px 64px rgba(15, 23, 42, 0.25);
+    --card-border:        #94a3b8;
+}
+
+:root[data-theme='dark'] {
+    --body-bg: radial-gradient(circle at top left, rgba(59, 130, 246, 0.18), transparent 26%),
+    linear-gradient(180deg, #0f172a 0%, #111827 100%);
+    --text-primary:       #e2e8f0;
+    --text-secondary:     #94a3b8;
+    --surface-primary:    rgba(15, 23, 42, 0.92);
+    --surface-secondary:  rgba(15, 23, 42, 0.88);
+    --surface-solid:      #111827;
+    --surface-muted:      #1e293b;
+    --border-soft:        rgba(148, 163, 184, 0.25);
+    --border-strong:      #475569;
+    --border-darker:      #334155;
+    --shadow-primary:     0 18px 40px rgba(2, 6, 23, 0.35);
+    --shadow-secondary:   0 14px 32px rgba(2, 6, 23, 0.30);
+    --shadow-hover:       0 8px 16px rgba(2, 6, 23, 0.28);
+    --panel-badge-bg:     rgba(16, 185, 129, 0.18);
+    --panel-badge-text:   #6ee7b7;
+    --section-label:      #60a5fa;
+
+    --divider-color:      #475569;
+    --accent-stripe:      linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    --table-head-bg:      #1e293b;
+    --table-row-hover:    rgba(59, 130, 246, 0.08);
+    --table-border:       #334155;
+    --table-border-strong:#475569;
+    --badge-bg:           rgba(37, 99, 235, 0.18);
+    --badge-text:         #93c5fd;
+
+    --label-color:        #94a3b8;
+    --input-bg:           #1e293b;
+    --input-border:       #475569;
+
+    --pill-bg:            rgba(37, 99, 235, 0.15);
+    --pill-border:        rgba(59, 130, 246, 0.35);
+    --pill-code-color:    #93c5fd;
+    --pill-name-color:    #bfdbfe;
+    --pill-remove-color:  #f87171;
+    --pill-remove-hover:  #fca5a5;
+
+    --btn-add-bg:         #3b82f6;
+    --btn-add-hover:      #2563eb;
+    --btn-assign-bg:      #16a34a;
+    --btn-assign-hover:   #15803d;
+    --btn-delete-bg:      #ef4444;
+    --btn-delete-hover:   #dc2626;
+    --btn-cancel-bg:      #1e293b;
+    --btn-cancel-color:   #94a3b8;
+    --btn-cancel-hover:   #334155;
+
+    --modal-overlay-bg:   rgba(2, 6, 23, 0.80);
+    --modal-bg:           #1e293b;
+    --modal-shadow:       0 24px 64px rgba(2, 6, 23, 0.50);
+    --card-border:        #475569;
+}
+
+/* ── Reset ──────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ── Body ───────────────────────────────────────────────────────────── */
+body {
+    margin-top: 120px;
+    min-height: 100vh;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--body-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* ── Page wrapper ───────────────────────────────────────────────────── */
+.page-wrapper {
+    max-width: 1180px;
+    margin: 48px auto 80px;
+    padding: 0 24px;
+}
+
+/* ── Card ───────────────────────────────────────────────────────────── */
+.dashboard-card {
+    position: relative;
+    background: var(--surface-primary);
+    border: 1.5px solid var(--card-border);
+    border-radius: 14px;
+    box-shadow: var(--shadow-primary);
+    padding-bottom: 40px;
+    overflow: hidden;
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-card::before {
+    content: '';
+    display: block;
+    height: 5px;
+    background: var(--accent-stripe);
+    border-radius: 14px 14px 0 0;
+}
+
+/* ── Card header ────────────────────────────────────────────────────── */
+.card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 32px 40px 6px;
+    flex-wrap: wrap;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--divider-color);
+}
+
+.card-title {
+    font-size: 24px;
+    font-weight: 750;
+    line-height: 1.2;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.card-subtitle {
+    margin-top: 6px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.card-divider {
+    margin: 24px 40px;
+    height: 2px;
+    background: var(--divider-color);
+    transition: background 0.3s ease;
+}
+
+/* ── Badges ─────────────────────────────────────────────────────────── */
+.id-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 12px;
+    border-radius: 999px;
+    background-color: var(--badge-bg);
+    color: var(--badge-text);
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    border: 1.5px solid var(--card-border);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.total-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 14px;
+    border-radius: 999px;
+    background-color: var(--panel-badge-bg);
+    color: var(--panel-badge-text);
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    border: 1.5px solid var(--card-border);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ── Table ──────────────────────────────────────────────────────────── */
+.table-scroll {
+    margin: 0 40px;
+    overflow-x: auto;
+    border: 1.5px solid var(--table-border-strong);
+    border-radius: 10px;
+    transition: border-color 0.3s ease;
+}
+
+.main-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: var(--surface-solid);
+    transition: background 0.3s ease;
+}
+
+.main-table th,
+.main-table td {
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1.5px solid var(--table-border);
+    vertical-align: middle;
+    transition: border-color 0.3s ease, color 0.3s ease, background-color 0.3s ease;
+}
+
+.main-table thead th {
+    background: var(--table-head-bg);
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 2.5px solid var(--table-border-strong);
+}
+
+.main-table tbody tr:hover {
+    background-color: var(--table-row-hover);
+}
+
+.main-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Column sizing hints */
+.col-id       { width: 120px; }
+.col-name     { width: 200px; }
+.col-subjects { /* flex */ }
+.col-actions  { width: 150px; text-align: center; }
+
+.cell-name {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.no-subjects {
+    color: var(--text-secondary);
+    font-style: italic;
+    font-size: 13px;
+}
+
+/* ── Subject pills ──────────────────────────────────────────────────── */
+.subject-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.subject-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px 4px 10px;
+    border-radius: 999px;
+    background: var(--pill-bg);
+    border: 1.5px solid var(--pill-border);
+    font-size: 12px;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.pill-code {
+    font-weight: 700;
+    color: var(--pill-code-color);
+}
+
+.pill-name {
+    color: var(--pill-name-color);
+    font-weight: 500;
+}
+
+.pill-remove {
+    background: none;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    color: var(--pill-remove-color);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 1px 3px;
+    border-radius: 50%;
+    transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.pill-remove:hover {
+    color: var(--pill-remove-hover);
+    background: rgba(220, 38, 38, 0.08);
+    border-color: var(--pill-remove-color);
+}
+
+/* ── Buttons ────────────────────────────────────────────────────────── */
+.btn-add,
+.btn-assign,
+.btn-delete,
+.btn-cancel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 18px;
+    border: 1.5px solid transparent;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-add {
+    background: var(--btn-add-bg);
+    color: #ffffff;
+}
+.btn-add:hover {
+    background: var(--btn-add-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.30);
+}
+
+.btn-assign {
+    background: var(--btn-assign-bg);
+    color: #ffffff;
+}
+.btn-assign:hover {
+    background: var(--btn-assign-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.30);
+}
+
+.btn-delete {
+    background: var(--btn-delete-bg);
+    color: #ffffff;
+}
+.btn-delete:hover {
+    background: var(--btn-delete-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.30);
+}
+
+.btn-cancel {
+    background: var(--btn-cancel-bg);
+    color: var(--btn-cancel-color);
+    border-color: var(--card-border);
+}
+.btn-cancel:hover {
+    background: var(--btn-cancel-hover);
+}
+
+/* ── Empty state ────────────────────────────────────────────────────── */
+.empty-state {
+    padding: 48px 16px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 15px;
+    transition: color 0.3s ease;
+}
+
+/* ── Global flash messages ──────────────────────────────────────────── */
+.global-messages {
+    display: block;
+    margin: 0 auto 20px;
+    max-width: 1180px;
+    padding: 0 24px;
+    list-style: none;
+}
+
+.msg-info,
+.msg-error {
+    display: block;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.msg-info  {
+    background: #ecfdf5;
+    color: #047857;
+    border: 1.5px solid #6ee7b7;
+}
+.msg-error {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1.5px solid #fca5a5;
+}
+
+/* ── Field-level error ──────────────────────────────────────────────── */
+.field-error {
+    display: block;
+    margin: 0 32px 16px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1.5px solid #fca5a5;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* ── Modal overlay ──────────────────────────────────────────────────── */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--modal-overlay-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    padding: 20px;
+}
+
+.modal-overlay.modal-visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* ── Modal box ──────────────────────────────────────────────────────── */
+.modal-box {
+    background: var(--modal-bg);
+    border: 1.5px solid var(--card-border);
+    border-radius: 14px;
+    box-shadow: var(--modal-shadow);
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.modal-box--sm {
+    max-width: 420px;
+}
+
+/* ── Modal header ───────────────────────────────────────────────────── */
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 32px 0;
+    border-bottom: 2px solid var(--divider-color);
+    padding-bottom: 16px;
+}
+
+.modal-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.modal-close {
+    background: none;
+    border: 1.5px solid var(--card-border);
+    font-size: 18px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    padding: 4px 10px;
+    border-radius: 6px;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    font-family: inherit;
+}
+.modal-close:hover {
+    background: var(--surface-muted);
+    color: var(--text-primary);
+    border-color: var(--border-darker);
+}
+
+.modal-divider {
+    margin: 16px 32px;
+    height: 2px;
+    background: var(--divider-color);
+    transition: background 0.3s ease;
+}
+
+/* ── Modal student info block ───────────────────────────────────────── */
+.modal-student-info {
+    margin: 0 32px;
+    padding: 16px 20px;
+    border-radius: 10px;
+    background: var(--surface-muted);
+    border: 1.5px solid var(--card-border);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.info-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.info-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--label-color);
+    min-width: 100px;
+    transition: color 0.3s ease;
+}
+
+.info-value {
+    font-size: 14px;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+/* ── Modal form ─────────────────────────────────────────────────────── */
+.form-group {
+    margin: 0 32px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--label-color);
+    transition: color 0.3s ease;
+}
+
+.form-select {
+    width: 100%;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1.5px solid var(--input-border);
+    border-radius: 8px;
+    background: var(--input-bg);
+    color: var(--text-primary);
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.3s ease, border-color 0.2s ease, color 0.3s ease;
+    appearance: auto;
+}
+
+.form-select:focus {
+    outline: 2px solid var(--btn-add-bg);
+    outline-offset: 1px;
+    border-color: var(--btn-add-bg);
+}
+
+/* ── Modal footer ───────────────────────────────────────────────────── */
+.modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 16px 32px 28px;
+    border-top: 2px solid var(--divider-color);
+}
+
+.modal-footer--center {
+    justify-content: center;
+}
+
+/* ── Confirm body ───────────────────────────────────────────────────── */
+.confirm-body {
+    padding: 16px 32px 24px;
+    text-align: center;
+}
+
+.confirm-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+    color: #f59e0b;
+}
+
+.confirm-text {
+    font-size: 15px;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    line-height: 1.5;
+    transition: color 0.3s ease;
+}
+
+.confirm-subtext {
+    font-size: 13px;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+    .page-wrapper    { padding: 0 16px; }
+    .card-header     { margin: 24px 20px 6px; }
+    .card-divider    { margin: 20px 20px; }
+    .table-scroll    { margin: 0 20px; }
+}
+
+@media (max-width: 640px) {
+    .card-title      { font-size: 20px; }
+
+    .main-table th,
+    .main-table td   { padding: 10px 12px; font-size: 13px; }
+
+    .col-id,
+    .col-actions     { width: auto; }
+
+    .modal-header,
+    .form-group,
+    .modal-footer,
+    .confirm-body    { padding-left: 20px; padding-right: 20px; }
+
+    .modal-student-info { margin: 0 20px; }
+    .modal-divider      { margin: 14px 20px; }
+    .field-error        { margin: 0 20px 14px; }
+}

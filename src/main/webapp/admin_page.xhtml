@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<f:view>
+    <h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Student Management System</title>
+        <h:outputStylesheet library="css" name="navbar.css?#{applicationScope.appVersion}"/>
+        <h:outputStylesheet library="css" name="style.css?#{applicationScope.appVersion}"/>
+        <h:outputScript library="script" name="script.js" target="body"/>
+    </h:head>
+    <h:body>
+
+        <!-- ── Navbar ───────────────────────────────────────────────── -->
+        <ui:param name="currentPage" value="#{request.servletPath}"/>
+
+        <!-- DESKTOP / TABLET NAVBAR -->
+        <div class="nav-bar">
+            <div class="nav-Menu">
+
+                <!-- Logo -->
+                <div class="H2-title">
+                    <h2>Student Management System</h2>
+                </div>
+
+                <!-- Desktop / Tablet: horizontal links -->
+                <div class="nav-list">
+                    <h:link outcome="admin_page"
+                            value="Home"
+                            styleClass="#{currentPage.contains('admin_page') ? 'active' : ''}"/>
+                    <h:link outcome="studentRegistration"
+                            value="Registration"
+                            styleClass="#{currentPage.contains('studentRegistration') ? 'active' : ''}"/>
+                    <h:link outcome="studentList"
+                            value="Show Student List"
+                            styleClass="#{currentPage.contains('studentList') ? 'active' : ''}"/>
+                    <h:link outcome="subjectEntry"
+                            value="Subject List"
+                            styleClass="#{currentPage.contains('subjectEntry') ? 'active' : ''}"/>
+                    <h:link outcome="studentSubjectList"
+                            value="Students Subject"
+                            styleClass="#{currentPage.contains('studentSubjectList') ? 'active' : ''}"/>
+                    <h:form style="display:contents;">
+                        <h:commandLink action="#{adminLoginBean.logout}"
+                                       value="Logout"
+                                       styleClass="logout"/>
+                    </h:form>
+                    <button id="theme-toggle"
+                            class="theme-toggle"
+                            type="button"
+                            aria-label="Switch theme">🌕</button>
+                </div>
+
+                <!-- Mobile: hamburger button -->
+                <!-- FIX: <span class="bar"/> → <span class="bar"></span> (XHTML rule) -->
+                <button class="nav-hamburger"
+                        id="nav-hamburger"
+                        type="button"
+                        aria-label="Open menu"
+                        aria-expanded="false"
+                        aria-controls="nav-mobile-menu">
+                    <span class="bar">
+
+                    </span>
+                    <span class="bar">
+
+                    </span>
+                    <span class="bar">
+
+                    </span>
+                </button>
+
+            </div>
+        </div>
+
+        <!-- MOBILE DROPDOWN MENU -->
+        <nav class="nav-mobile-menu" id="nav-mobile-menu" aria-label="Mobile navigation">
+            <ul>
+                <li>
+                    <h:link outcome="admin_page"
+                            value="🏠  Home"
+                            styleClass="#{currentPage.contains('admin_page') ? 'active' : ''}"/>
+                </li>
+                <li>
+                    <h:link outcome="studentRegistration"
+                            value="📝  Registration"
+                            styleClass="#{currentPage.contains('studentRegistration') ? 'active' : ''}"/>
+                </li>
+                <li>
+                    <h:link outcome="studentList"
+                            value="👥  Show Student List"
+                            styleClass="#{currentPage.contains('studentList') ? 'active' : ''}"/>
+                </li>
+                <li>
+                    <h:link outcome="subjectEntry"
+                            value="📚  Subject List"
+                            styleClass="#{currentPage.contains('subjectEntry') ? 'active' : ''}"/>
+                </li>
+                <li>
+                    <h:link outcome="studentSubjectList"
+                            value="🔗  Students Subject"
+                            styleClass="#{currentPage.contains('studentSubjectList') ? 'active' : ''}"/>
+                </li>
+                <li class="nav-divider">
+
+                </li>
+                <li>
+                    <h:form style="display:contents;">
+                        <h:commandLink action="#{adminLoginBean.logout}"
+                                       value="⏻  Logout"
+                                       styleClass="logout-mobile"/>
+                    </h:form>
+                </li>
+            </ul>
+            <div class="nav-mobile-footer">
+                <span>Switch Theme</span>
+                <button id="theme-toggle-mobile"
+                        class="theme-toggle-mobile"
+                        type="button"
+                        aria-label="Switch theme">🌕</button>
+            </div>
+        </nav>
+
+        <!-- Invisible backdrop — click to close menu -->
+        <div class="nav-backdrop" id="nav-backdrop">
+
+        </div>
+
+        <!-- ────────────────────────Body──────────────────────── -->
+        <main class="page-shell">
+            <section class="hero-section">
+                <div class="hero-copy">
+                    <p class="eyebrow">Academic Operations</p>
+                    <h1>Manage student records with a cleaner daily workflow.</h1>
+                    <p class="hero-text">
+                        Centralize registration, monitor key activity, and keep student information organized
+                        from a single admin workspace.
+                    </p>
+                    <div class="hero-actions">
+                        <h:link outcome="studentRegistration" value="New Registration" styleClass="primary-action"/>
+                        <h:link outcome="studentList" value="Open Student List" styleClass="secondary-action"/>
+                    </div>
+                </div>
+
+                <div class="hero-panel">
+                    <div class="panel-header">
+                        <span class="panel-title">Today&apos;s Overview</span>
+                        <span class="panel-badge">Live</span>
+                    </div>
+                    <div class="metric-grid">
+                        <div class="metric-card">
+                            <span class="metric-label">Registered</span>
+                            <strong>1,284</strong>
+                            <small>Active student profiles</small>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-label">Pending</span>
+                            <strong>16</strong>
+                            <small>Forms awaiting approval</small>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-label">Updated</span>
+                            <strong>48</strong>
+                            <small>Records edited this week</small>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-label">Accuracy</span>
+                            <strong>99.2%</strong>
+                            <small>Profile completion rate</small>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </h:body>
+</f:view>
+</html>

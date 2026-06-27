@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Student Subject List</title>
+    <h:outputStylesheet library="css" name="navbar.css?#{applicationScope.appVersion}"/>
+    <h:outputStylesheet library="css" name="StudentSubjectList.css?#{applicationScope.appVersion}"/>
+    <h:outputScript library="script" name="script.js" target="body"/>
+</h:head>
+
+<h:body>
+
+    <!-- ─────────────────────── Navbar ──────────────────────────── -->
+    <ui:param name="currentPage" value="#{request.servletPath}"/>
+
+    <!-- DESKTOP / TABLET NAVBAR -->
+    <div class="nav-bar">
+        <div class="nav-Menu">
+
+            <!-- Logo -->
+            <div class="H2-title">
+                <h2>Student Management System</h2>
+            </div>
+
+            <!-- Desktop / Tablet: horizontal links -->
+            <div class="nav-list">
+                <h:link outcome="admin_page"
+                        value="Home"
+                        styleClass="#{currentPage.contains('admin_page') ? 'active' : ''}"/>
+                <h:link outcome="studentRegistration"
+                        value="Registration"
+                        styleClass="#{currentPage.contains('studentRegistration') ? 'active' : ''}"/>
+                <h:link outcome="studentList"
+                        value="Show Student List"
+                        styleClass="#{currentPage.contains('studentList') ? 'active' : ''}"/>
+                <h:link outcome="subjectEntry"
+                        value="Subject List"
+                        styleClass="#{currentPage.contains('subjectEntry') ? 'active' : ''}"/>
+                <h:link outcome="studentSubjectList"
+                        value="Students Subject"
+                        styleClass="#{currentPage.contains('studentSubjectList') ? 'active' : ''}"/>
+                <h:form style="display:contents;">
+                    <h:commandLink action="#{adminLoginBean.logout}"
+                                   value="Logout"
+                                   styleClass="logout"/>
+                </h:form>
+                <button id="theme-toggle"
+                        class="theme-toggle"
+                        type="button"
+                        aria-label="Switch theme">🌕
+                </button>
+            </div>
+
+            <!-- Mobile: hamburger button -->
+            <!-- FIX: <span class="bar"/> → <span class="bar"></span> (XHTML rule) -->
+            <button class="nav-hamburger"
+                    id="nav-hamburger"
+                    type="button"
+                    aria-label="Open menu"
+                    aria-expanded="false"
+                    aria-controls="nav-mobile-menu">
+                    <span class="bar">
+
+                    </span>
+                <span class="bar">
+
+                    </span>
+                <span class="bar">
+
+                    </span>
+            </button>
+
+        </div>
+    </div>
+
+    <!-- MOBILE DROPDOWN MENU -->
+    <nav class="nav-mobile-menu" id="nav-mobile-menu" aria-label="Mobile navigation">
+        <ul>
+            <li>
+                <h:link outcome="admin_page"
+                        value="🏠  Home"
+                        styleClass="#{currentPage.contains('admin_page') ? 'active' : ''}"/>
+            </li>
+            <li>
+                <h:link outcome="studentRegistration"
+                        value="📝  Registration"
+                        styleClass="#{currentPage.contains('studentRegistration') ? 'active' : ''}"/>
+            </li>
+            <li>
+                <h:link outcome="studentList"
+                        value="👥  Show Student List"
+                        styleClass="#{currentPage.contains('studentList') ? 'active' : ''}"/>
+            </li>
+            <li>
+                <h:link outcome="subjectEntry"
+                        value="📚  Subject List"
+                        styleClass="#{currentPage.contains('subjectEntry') ? 'active' : ''}"/>
+            </li>
+            <li>
+                <h:link outcome="studentSubjectList"
+                        value="🔗  Students Subject"
+                        styleClass="#{currentPage.contains('studentSubjectList') ? 'active' : ''}"/>
+            </li>
+            <li class="nav-divider">
+
+            </li>
+            <li>
+                <h:form style="display:contents;">
+                    <h:commandLink action="#{adminLoginBean.logout}"
+                                   value="⏻  Logout"
+                                   styleClass="logout-mobile"/>
+                </h:form>
+            </li>
+        </ul>
+        <div class="nav-mobile-footer">
+            <span>Switch Theme</span>
+            <button id="theme-toggle-mobile"
+                    class="theme-toggle-mobile"
+                    type="button"
+                    aria-label="Switch theme">🌕
+            </button>
+        </div>
+    </nav>
+
+    <!-- Invisible backdrop — click to close menu -->
+    <div class="nav-backdrop" id="nav-backdrop">
+
+    </div>
+
+    <h:messages id="globalMessages" globalOnly="true"
+                styleClass="global-messages"
+                errorClass="msg-error" infoClass="msg-info"/>
+
+    <div class="page-wrapper">
+        <div class="dashboard-card">
+
+            <div class="card-header">
+                <div class="card-header-left">
+                    <h1 class="card-title">Student Subject List</h1>
+                    <p class="card-subtitle">Manage subject assignments for each student</p>
+                </div>
+                <span class="total-badge">
+                    Total Students: #{subjectBean.rows.size()}
+                </span>
+            </div>
+
+            <div class="card-divider"/>
+
+            <div class="table-scroll">
+                <h:form id="mainForm" prependId="false">
+                    <table class="main-table">
+                        <thead>
+                        <tr>
+                            <th class="col-id">Student ID</th>
+                            <th class="col-name">Student Name</th>
+                            <th class="col-subjects">Assigned Subjects</th>
+                            <th class="col-actions">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <ui:fragment rendered="#{empty subjectBean.rows}">
+                            <tr>
+                                <td colspan="4" class="empty-state">No students found.</td>
+                            </tr>
+                        </ui:fragment>
+
+                        <ui:repeat value="#{subjectBean.rows}" var="row">
+                            <tr>
+                                <td>
+                                    <span class="id-badge">#{row.student.student_id}</span>
+                                </td>
+                                <td class="cell-name">#{row.student.name}</td>
+
+                                <td>
+                                    <ui:fragment rendered="#{empty row.subjects}">
+                                        <span class="no-subjects">No subjects assigned</span>
+                                    </ui:fragment>
+
+                                    <ui:fragment rendered="#{not empty row.subjects}">
+                                        <div class="subject-pills">
+                                            <ui:repeat value="#{row.subjects}" var="subj">
+                                                    <span class="subject-pill">
+                                                        <span class="pill-code">#{subj.subjectCode}</span>
+                                                        <span class="pill-name">#{subj.subjectName}</span>
+                                                        <h:commandButton value="✕"
+                                                                         styleClass="pill-remove"
+                                                                         title="Remove subject"
+                                                                         action="#{subjectBean.confirmRemove(row, subj)}">
+                                                            <f:ajax execute="@this"
+                                                                    render="mainForm confirmModal globalMessages"/>
+                                                        </h:commandButton>
+                                                    </span>
+                                            </ui:repeat>
+                                        </div>
+                                    </ui:fragment>
+                                </td>
+
+                                <td>
+                                    <h:commandButton value="+ Add Subject"
+                                                     styleClass="btn-add"
+                                                     action="#{subjectBean.openEnrollModal(row)}">
+                                        <f:ajax execute="@this"
+                                                render="addModal mainForm globalMessages"/>
+                                    </h:commandButton>
+                                </td>
+                            </tr>
+                        </ui:repeat>
+
+                        </tbody>
+                    </table>
+                </h:form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ Add Subject Modal ════════════════════════════════════════ -->
+    <h:form id="addModal" prependId="false">
+        <div class="modal-overlay #{subjectBean.showEnrollModal ? 'modal-visible' : ''}">
+            <div class="modal-box">
+
+                <div class="modal-header">
+                    <h2 class="modal-title">Assign Subject</h2>
+                    <h:commandButton value="✕" styleClass="modal-close"
+                                     action="#{subjectBean.closeEnrollModal()}">
+                        <f:ajax execute="@this" render="addModal globalMessages"/>
+                    </h:commandButton>
+                </div>
+
+                <div class="modal-divider"/>
+
+                <ui:fragment rendered="#{subjectBean.addTarget != null}">
+
+                    <div class="modal-student-info">
+                        <div class="info-row">
+                            <span class="info-label">Student ID</span>
+                            <span class="info-value id-badge">
+                                #{subjectBean.addTarget.student.student_id}
+                            </span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Student Name</span>
+                            <span class="info-value cell-name">
+                                #{subjectBean.addTarget.student.name}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="modal-divider"/>
+
+                    <h:message for="addSubjectMsg" id="addSubjectMsg" styleClass="field-error"/>
+
+                    <div class="form-group">
+                        <label class="form-label" for="subjectSelect">Select Subject</label>
+                        <h:selectOneMenu id="subjectSelect"
+                                         styleClass="form-select"
+                                         value="#{subjectBean.selectedSubjectId}">
+                            <f:selectItem itemLabel="— Choose a subject —" itemValue="0"/>
+                            <f:selectItems value="#{subjectBean.allSubjects}"
+                                           var="s"
+                                           itemLabel="#{s.subjectCode} — #{s.subjectName}"
+                                           itemValue="#{s.id}"/>
+                        </h:selectOneMenu>
+                    </div>
+
+                    <div class="modal-footer">
+                        <h:commandButton value="Cancel" styleClass="btn-cancel"
+                                         action="#{subjectBean.closeEnrollModal()}">
+                            <f:ajax execute="@this" render="addModal globalMessages"/>
+                        </h:commandButton>
+                        <h:commandButton value="Assign Subject" styleClass="btn-assign"
+                                         action="#{subjectBean.assignSubject()}">
+                            <f:ajax execute="addModal"
+                                    render="addModal mainForm globalMessages"/>
+                        </h:commandButton>
+                    </div>
+
+                </ui:fragment>
+            </div>
+        </div>
+    </h:form>
+
+    <!-- ══ Confirm Remove Modal ═════════════════════════════════════ -->
+    <h:form id="confirmModal" prependId="false">
+        <div class="modal-overlay #{subjectBean.showRemoveConfirm ? 'modal-visible' : ''}">
+            <div class="modal-box modal-box--sm">
+
+                <div class="modal-header">
+                    <h2 class="modal-title">Confirm Removal</h2>
+                </div>
+
+                <div class="modal-divider"/>
+
+                <div class="confirm-body">
+                    <div class="confirm-icon">⚠</div>
+                    <p class="confirm-text">
+                        Are you sure you want to remove
+                        <ui:fragment rendered="#{subjectBean.removeSubjectTarget != null}">
+                            <strong>#{subjectBean.removeSubjectTarget.subjectName}</strong>
+                        </ui:fragment>
+                        from this student?
+                    </p>
+                    <p class="confirm-subtext">This will only remove the assignment, not the subject itself.</p>
+                </div>
+
+                <div class="modal-footer modal-footer--center">
+                    <h:commandButton value="No, Keep It" styleClass="btn-cancel"
+                                     action="#{subjectBean.cancelRemove()}">
+                        <f:ajax execute="@this" render="confirmModal globalMessages"/>
+                    </h:commandButton>
+                    <h:commandButton value="Yes, Remove" styleClass="btn-delete"
+                                     action="#{subjectBean.removeSubject()}">
+                        <f:ajax execute="@this"
+                                render="confirmModal mainForm globalMessages"/>
+                    </h:commandButton>
+                </div>
+
+            </div>
+        </div>
+    </h:form>
+
+</h:body>
+</html>

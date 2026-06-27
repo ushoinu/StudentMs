@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+<f:view>
+    <h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Student Dashboard</title>
+        <h:outputStylesheet library="css" name="navbar.css?#{applicationScope.appVersion}"/>
+        <h:outputStylesheet library="css" name="student_page.css?#{applicationScope.appVersion}"/>
+        <h:outputScript library="script" name="script.js" target="body"/>
+    </h:head>
+    <h:body>
+
+        <!-- ── Navbar with Hamburger ───────────────────────────── -->
+        <div class="nav-bar">
+            <div class="nav-Menu">
+                <div class="H2-title">
+                    <h2>Student Management System</h2>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="nav-list">
+                    <h:form>
+                        <h:commandLink action="#{studentLoginBean.logout()}"
+                                       value="Logout" styleClass="logout-link"/>
+                    </h:form>
+                    <button id="theme-toggle" class="theme-toggle"
+                            type="button" aria-label="Switch theme">🌕</button>
+                </div>
+
+                <!-- Hamburger Menu Button -->
+                <button class="nav-hamburger"
+                        id="nav-hamburger"
+                        aria-label="Toggle menu"
+                        aria-expanded="false">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+
+            <!-- Mobile Dropdown Menu -->
+            <div class="nav-mobile-menu" id="nav-mobile-menu" role="navigation" aria-label="Mobile navigation">
+                <ul>
+                    <li>
+                        <h:form>
+                            <h:commandLink action="#{studentLoginBean.logout()}"
+                                           value="Logout" styleClass="logout-link"/>
+                        </h:form>
+                    </li>
+                </ul>
+                <div class="nav-mobile-footer">
+                    <span>Switch Theme</span>
+                    <button id="theme-toggle-mobile" class="theme-toggle-mobile" aria-label="Switch theme">
+                        🌕
+                    </button>
+                </div>
+            </div>
+
+            <!-- Backdrop -->
+            <div class="nav-backdrop" id="nav-backdrop">
+
+            </div>
+        </div>
+
+        <!-- ── Page wrapper ─────────────────────────────────────── -->
+        <div class="dashboard-wrapper">
+
+            <!-- Profile Card -->
+            <div class="dashboard-card profile-card">
+
+                <div class="card-header">
+                    <div>
+                        <h2 class="card-title">My Profile</h2>
+                        <p class="card-subtitle">Your registration details (read-only).</p>
+                    </div>
+                    <span class="id-badge">
+                        ID: #{studentDashboardBean.student.student_id}
+                    </span>
+                </div>
+
+                <div class="card-divider"/>
+
+                <div class="profile-grid">
+
+                    <div class="info-group">
+                        <label>Student ID</label>
+                        <h:inputText value="#{studentDashboardBean.student.student_id}"
+                                     readonly="true" styleClass="readonly-field"/>
+                    </div>
+
+                    <div class="info-group">
+                        <label>Full Name</label>
+                        <h:inputText value="#{studentDashboardBean.student.name}"
+                                     readonly="true" styleClass="readonly-field"/>
+                    </div>
+
+                    <div class="info-group">
+                        <label>Gender</label>
+                        <h:inputText value="#{studentDashboardBean.student.gender}"
+                                     readonly="true" styleClass="readonly-field"/>
+                    </div>
+
+                    <div class="info-group">
+                        <label>Batch</label>
+                        <h:inputText value="#{studentDashboardBean.student.batch}"
+                                     readonly="true" styleClass="readonly-field"/>
+                    </div>
+
+                    <div class="info-group">
+                        <label>Date of Birth</label>
+                        <h:inputText value="#{studentDashboardBean.student.date_of_birth}"
+                                     readonly="true" styleClass="readonly-field"/>
+                    </div>
+
+                    <div class="info-group">
+                        <label>Phone</label>
+                        <h:inputText value="#{studentDashboardBean.student.phone}"
+                                     readonly="true" styleClass="readonly-field"/>
+                    </div>
+
+                    <div class="info-group">
+                        <label>Registered On</label>
+                        <h:inputText value="#{studentDashboardBean.student.registrationDate}"
+                                     readonly="true" styleClass="readonly-field"
+                                     p:placeholder="N/A"/>
+                    </div>
+
+                    <div class="info-group span-2">
+                        <label>Address</label>
+                        <h:inputText value="#{studentDashboardBean.student.address}"
+                                     readonly="true" styleClass="readonly-field"/>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Enrolled Subjects Card -->
+            <div class="dashboard-card subjects-card">
+
+                <div class="card-header">
+                    <div>
+                        <h2 class="card-title">Enrolled Subjects</h2>
+                        <p class="card-subtitle">Subjects you are currently enrolled in.</p>
+                    </div>
+                    <span class="total-badge">
+                        Total: #{studentDashboardBean.totalSubjects}
+                    </span>
+                </div>
+
+                <div class="card-divider"/>
+
+                <div class="table-scroll">
+                    <h:dataTable value="#{studentDashboardBean.subjects}" var="sub"
+                                 styleClass="subjects-table"
+                                 rendered="#{not empty studentDashboardBean.subjects}">
+
+                        <h:column>
+                            <f:facet name="header">Subject Code</f:facet>
+                            <span class="cell-code">#{sub.subjectCode}</span>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">Subject Name</f:facet>
+                            <span class="cell-name">#{sub.subjectName}</span>
+                        </h:column>
+
+                    </h:dataTable>
+
+                    <h:panelGroup layout="block" styleClass="empty-state"
+                                  rendered="#{empty studentDashboardBean.subjects}">
+                        <p>You are not enrolled in any subjects yet.</p>
+                    </h:panelGroup>
+                </div>
+            </div>
+
+        </div>
+    </h:body>
+</f:view>
+</html>
