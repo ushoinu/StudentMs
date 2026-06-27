@@ -1,2 +1,3 @@
 # StudentMs
-A Students Management System
+# StudentMs
+# StudentMs
