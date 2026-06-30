@@ -15,20 +15,14 @@
     </h:head>
     <h:body>
 
-
         <!-- ─────────────────────── Navbar ──────────────────────────── -->
         <ui:param name="currentPage" value="#{request.servletPath}"/>
 
-        <!-- DESKTOP / TABLET NAVBAR -->
         <div class="nav-bar">
             <div class="nav-Menu">
-
-                <!-- Logo -->
                 <div class="H2-title">
                     <h2>Student Management System</h2>
                 </div>
-
-                <!-- Desktop / Tablet: horizontal links -->
                 <div class="nav-list">
                     <h:link outcome="admin_page"
                             value="Home"
@@ -50,85 +44,45 @@
                                        value="Logout"
                                        styleClass="logout"/>
                     </h:form>
-                    <button id="theme-toggle"
-                            class="theme-toggle"
-                            type="button"
-                            aria-label="Switch theme">🌕
-                    </button>
+                    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch theme">🌕</button>
                 </div>
-
-                <!-- Mobile: hamburger button -->
-                <!-- FIX: <span class="bar"/> → <span class="bar"></span> (XHTML rule) -->
-                <button class="nav-hamburger"
-                        id="nav-hamburger"
-                        type="button"
-                        aria-label="Open menu"
-                        aria-expanded="false"
-                        aria-controls="nav-mobile-menu">
-                    <span class="bar">
-
-                    </span>
-                    <span class="bar">
-
-                    </span>
-                    <span class="bar">
-
-                    </span>
+                <button class="nav-hamburger" id="nav-hamburger" type="button"
+                        aria-label="Open menu" aria-expanded="false" aria-controls="nav-mobile-menu">
+                    <span class="bar"/>
+                    <span class="bar"/>
+                    <span class="bar"/>
                 </button>
-
             </div>
         </div>
 
-        <!-- MOBILE DROPDOWN MENU -->
         <nav class="nav-mobile-menu" id="nav-mobile-menu" aria-label="Mobile navigation">
             <ul>
-                <li>
-                    <h:link outcome="admin_page"
-                            value="🏠  Home"
-                            styleClass="#{currentPage.contains('admin_page') ? 'active' : ''}"/>
-                </li>
-                <li>
-                    <h:link outcome="studentRegistration"
-                            value="📝  Registration"
-                            styleClass="#{currentPage.contains('studentRegistration') ? 'active' : ''}"/>
-                </li>
-                <li>
-                    <h:link outcome="studentList"
-                            value="👥  Show Student List"
-                            styleClass="#{currentPage.contains('studentList') ? 'active' : ''}"/>
-                </li>
-                <li>
-                    <h:link outcome="subjectEntry"
-                            value="📚  Subject List"
-                            styleClass="#{currentPage.contains('subjectEntry') ? 'active' : ''}"/>
-                </li>
-                <li>
-                    <h:link outcome="studentSubjectList"
-                            value="🔗  Students Subject"
-                            styleClass="#{currentPage.contains('studentSubjectList') ? 'active' : ''}"/>
-                </li>
+                <li><h:link outcome="admin_page" value="🏠  Home"
+                            styleClass="#{currentPage.contains('admin_page') ? 'active' : ''}"/></li>
+                <li><h:link outcome="studentRegistration" value="📝  Registration"
+                            styleClass="#{currentPage.contains('studentRegistration') ? 'active' : ''}"/></li>
+                <li><h:link outcome="studentList" value="👥  Show Student List"
+                            styleClass="#{currentPage.contains('studentList') ? 'active' : ''}"/></li>
+                <li><h:link outcome="subjectEntry" value="📚  Subject List"
+                            styleClass="#{currentPage.contains('subjectEntry') ? 'active' : ''}"/></li>
+                <li><h:link outcome="studentSubjectList" value="🔗  Students Subject"
+                            styleClass="#{currentPage.contains('studentSubjectList') ? 'active' : ''}"/></li>
                 <li class="nav-divider">
 
                 </li>
                 <li>
                     <h:form style="display:contents;">
-                        <h:commandLink action="#{adminLoginBean.logout}"
-                                       value="⏻  Logout"
-                                       styleClass="logout-mobile"/>
+                        <h:commandLink action="#{adminLoginBean.logout}" value="⏻  Logout" styleClass="logout-mobile"/>
                     </h:form>
                 </li>
             </ul>
             <div class="nav-mobile-footer">
                 <span>Switch Theme</span>
-                <button id="theme-toggle-mobile"
-                        class="theme-toggle-mobile"
-                        type="button"
-                        aria-label="Switch theme">🌕
+                <button id="theme-toggle-mobile" class="theme-toggle-mobile" type="button" aria-label="Switch theme">🌕
                 </button>
             </div>
         </nav>
 
-        <!-- Invisible backdrop — click to close menu -->
         <div class="nav-backdrop" id="nav-backdrop">
 
         </div>
@@ -138,108 +92,122 @@
 
             <h:form id="listForm">
 
-                <div class="list-card">
 
-                    <!-- Header -->
-                    <div class="list-header">
-                        <div>
-                            <h2 class="list-title">Registered Students</h2>
-                            <p class="list-subtitle">All students currently registered in the system.</p>
+                <!-- ── Main page message panel (outside modal) ──────── -->
+                <h:panelGroup id="messagePanel" layout="block" styleClass="message">
+                    <h:messages globalOnly="true"
+                                showSummary="true"
+                                showDetail="false"
+                                layout="list"
+                                styleClass="message"/>
+                    <!-- Hidden flag: JS reads this to know if update succeeded -->
+                    <span id="updateSuccessFlag"
+                          style="display:none;">#{studentBean.updateSuccess}</span>
+                </h:panelGroup>
+
+                <!-- ── Content Panel (card + table) ─────────────────── -->
+                <h:panelGroup id="contentPanel" layout="block">
+                    <div class="list-card">
+
+                        <div class="list-header">
+                            <div>
+                                <h2 class="list-title">Registered Students</h2>
+                                <p class="list-subtitle">All students currently registered in the system.</p>
+                            </div>
+                            <span class="total-badge">
+                                Total: #{studentBean.totalStudents}
+                            </span>
                         </div>
-                        <span class="total-badge">
-                            Total: #{studentBean.totalStudents}
-                        </span>
+
+                        <div class="list-divider"></div>
+
+                        <div class="table-scroll">
+                            <h:dataTable value="#{studentBean.students}" var="s"
+                                         styleClass="student-table"
+                                         rendered="#{not empty studentBean.students}">
+
+                                <h:column>
+                                    <f:facet name="header">Student ID</f:facet>
+                                    <span class="cell-id">#{s.student_id}</span>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">Name</f:facet>
+                                    <span class="cell-name">#{s.name}</span>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">Class / Batch</f:facet>
+                                    <span class="batch-badge">#{s.batch}</span>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">Gender</f:facet>
+                                    #{s.gender}
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">Phone</f:facet>
+                                    #{s.phone}
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">Date of Birth</f:facet>
+                                    #{s.date_of_birth}
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">Address</f:facet>
+                                    <span class="cell-address">#{s.address}</span>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">Action</f:facet>
+                                    <div class="action-buttons">
+
+                                        <!-- Edit: open modal with student data -->
+                                        <h:commandButton value="Edit"
+                                                         styleClass="btn-edit"
+                                                         type="submit">
+                                            <f:ajax execute="@this"
+                                                    listener="#{studentBean.prepareEdit(s)}"
+                                                    render=":listForm:editModalPanel"
+                                                    onevent="handleEditAjax"/>
+                                        </h:commandButton>
+
+                                        <!-- Delete: refresh table + show message on page -->
+                                        <h:commandButton value="Delete"
+                                                         styleClass="btn-delete"
+                                                         type="submit"
+                                                         onclick="return confirm('Are you sure you want to delete this student?');">
+                                            <f:ajax execute="@this"
+                                                    listener="#{studentBean.deleteStudent(s.student_id)}"
+                                                    render=":listForm:messagePanel :listForm:contentPanel"/>
+                                        </h:commandButton>
+
+                                    </div>
+                                </h:column>
+
+                            </h:dataTable>
+
+                            <h:panelGroup layout="block"
+                                          styleClass="empty-state"
+                                          rendered="#{empty studentBean.students}">
+                                <p>No students have been registered yet.</p>
+                            </h:panelGroup>
+                        </div>
+
                     </div>
+                </h:panelGroup>
+                <!-- ── end contentPanel ─────────────────────────────── -->
 
-                    <div class="list-divider"></div>
 
-                    <!-- Global messages -->
-                    <h:messages id="globalMessages" globalOnly="true" showDetail="true" styleClass="message"/>
-
-                    <!-- Table -->
-                    <div class="table-scroll">
-                        <h:dataTable value="#{studentBean.students}" var="s"
-                                     styleClass="student-table"
-                                     rendered="#{not empty studentBean.students}">
-
-                            <h:column>
-                                <f:facet name="header">Student ID</f:facet>
-                                <span class="cell-id">#{s.student_id}</span>
-                            </h:column>
-
-                            <h:column>
-                                <f:facet name="header">Name</f:facet>
-                                <span class="cell-name">#{s.name}</span>
-                            </h:column>
-
-                            <h:column>
-                                <f:facet name="header">Class / Batch</f:facet>
-                                <span class="batch-badge">#{s.batch}</span>
-                            </h:column>
-
-                            <h:column>
-                                <f:facet name="header">Gender</f:facet>
-                                #{s.gender}
-                            </h:column>
-
-                            <h:column>
-                                <f:facet name="header">Phone</f:facet>
-                                #{s.phone}
-                            </h:column>
-
-                            <h:column>
-                                <f:facet name="header">Date of Birth</f:facet>
-                                #{s.date_of_birth}
-                            </h:column>
-
-                            <h:column>
-                                <f:facet name="header">Address</f:facet>
-                                <span class="cell-address">#{s.address}</span>
-                            </h:column>
-
-                            <!-- ── Action column ─────────────────────────── -->
-                            <h:column>
-                                <f:facet name="header">Action</f:facet>
-                                <div class="action-buttons">
-
-                                    <!-- Edit -->
-                                    <h:commandButton value="Edit" styleClass="btn-edit" type="submit">
-                                        <f:ajax execute="@this"
-                                                listener="#{studentBean.prepareEdit(s)}"
-                                                render=":listForm:editModalPanel"
-                                                onevent="handleEditAjax"/>
-                                    </h:commandButton>
-
-                                    <!-- Delete -->
-                                    <h:commandButton value="Delete" styleClass="btn-delete" type="submit"
-                                                     onclick="return confirm('Are you sure you want to delete this student?');">
-                                        <f:ajax execute="@this"
-                                                listener="#{studentBean.deleteStudent(s.student_id)}"
-                                                render=":listForm"/>
-                                    </h:commandButton>
-
-                                </div>
-                            </h:column>
-
-                        </h:dataTable>
-
-                        <!-- Empty state -->
-                        <h:panelGroup layout="block" styleClass="empty-state"
-                                      rendered="#{empty studentBean.students}">
-                            <p>No students have been registered yet.</p>
-                        </h:panelGroup>
-                    </div>
-
-                </div>
-
-                <!-- ══════════════════ Edit Modal ══════════════════ -->
+                <!-- ══════════════════ Edit Modal ══════════════════════ -->
                 <div id="editModalOverlay" class="modal-overlay">
                     <h:panelGroup id="editModalPanel" layout="block" styleClass="modal-box">
 
                         <h3 class="modal-title">Edit Student</h3>
-                        <p class="modal-subtitle">
-                            Update the details below, then click "Update".
-                        </p>
+                        <p class="modal-subtitle">Update the details below, then click "Update".</p>
 
                         <div class="modal-grid">
 
@@ -310,14 +278,26 @@
 
                         </div>
 
+                        <h:panelGroup id="modalMessagePanel" layout="block">
+                            <h:messages globalOnly="true"
+                                        showSummary="true"
+                                        showDetail="false"
+                                        layout="list"
+                                        styleClass="message modal-message"/>
+                        </h:panelGroup>
+
                         <div class="modal-actions">
                             <button type="button" class="btn-cancel" onclick="closeEditModal()">
                                 Cancel
                             </button>
+
+
                             <h:commandButton value="Update" styleClass="btn-update">
                                 <f:ajax execute=":listForm:editModalPanel"
                                         listener="#{studentBean.updateStudent}"
-                                        render=":listForm"
+                                        render=":listForm:modalMessagePanel
+                                                :listForm:messagePanel
+                                                :listForm:contentPanel"
                                         onevent="handleUpdateAjax"/>
                             </h:commandButton>
                         </div>

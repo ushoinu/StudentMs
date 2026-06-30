@@ -863,6 +863,9 @@ a {
 }
 
 @media (max-width: 640px) {
+    .mobile-hero-panel{
+        display: none;
+    }
     .page-shell {
         padding-bottom: 32px;
     }

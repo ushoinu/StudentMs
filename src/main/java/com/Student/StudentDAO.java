@@ -7,6 +7,10 @@ import java.util.List;
 
 public class StudentDAO {
 
+    /* ══════════════════════════════════════════════════════════════
+       STUDENT CRUD
+       ══════════════════════════════════════════════════════════════ */
+
     /* ── Login ──────────────────────────────────────────────────── */
     private static final String LOGIN_SQL =
             "SELECT 1 FROM students WHERE student_id = ? AND TRIM(password) = ?";
@@ -50,11 +54,11 @@ public class StudentDAO {
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(INSERT_SQL)) {
             ps.setString(1, student.getName());
-            ps.setInt(2, student.getStudent_id());
+            ps.setInt   (2, student.getStudent_id());
             ps.setString(3, student.getDate_of_birth());
             ps.setString(4, student.getAddress());
             ps.setString(5, student.getGender());
-            ps.setInt(6, student.getBatch());
+            ps.setObject(6, student.getBatchAsInt());   // Integer — may be null
             ps.setString(7, student.getPhone());
             ps.setString(8, student.getPassword());
             int rows = ps.executeUpdate();
@@ -82,22 +86,62 @@ public class StudentDAO {
 
             while (rs.next()) {
                 Students s = new Students();
-                s.setName(rs.getString("name"));
-                s.setStudent_id(rs.getInt("student_id"));
-                s.setDate_of_birth(rs.getString("date_of_birth"));
-                s.setAddress(rs.getString("address"));
-                s.setGender(rs.getString("gender"));
-                s.setBatch(rs.getInt("batch"));
-                s.setPhone(rs.getString("phone"));
-                s.setPassword(rs.getString("password"));
+                s.setName          (rs.getString("name"));
+                s.setStudent_id    (rs.getInt   ("student_id"));
+                s.setDate_of_birth (rs.getString("date_of_birth"));
+                s.setAddress       (rs.getString("address"));
+                s.setGender        (rs.getString("gender"));
+                s.setBatch         (rs.getInt   ("batch"));   // Integer setter
+                s.setPhone         (rs.getString("phone"));
+                s.setPassword      (rs.getString("password"));
                 list.add(s);
             }
-
         } catch (SQLException e) {
             System.err.println("❌ DB Error (getAllStudents): " + e.getMessage());
             e.printStackTrace();
         }
         return list;
+    }
+
+    /* ── Fetch a single student by ID ────────────────────────────── */
+    private static final String SELECT_BY_ID_SQL =
+            "SELECT student_id, name, date_of_birth, address, gender, batch, phone, " +
+                    "password, email, registration_date " +
+                    "FROM students WHERE student_id = ?";
+
+    /**
+     * Single, authoritative getStudentById — accepts int.
+     * Replaces the two conflicting overloads that existed before.
+     */
+    public Students getStudentById(int studentId) {
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(SELECT_BY_ID_SQL)) {
+
+            ps.setInt(1, studentId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Students s = new Students();
+                    s.setStudent_id    (rs.getInt   ("student_id"));
+                    s.setName          (rs.getString("name"));
+                    s.setDate_of_birth (rs.getString("date_of_birth"));
+                    s.setAddress       (rs.getString("address"));
+                    s.setGender        (rs.getString("gender"));
+                    s.setBatch         (rs.getInt   ("batch"));   // Integer setter
+                    s.setPhone         (rs.getString("phone"));
+                    s.setPassword      (rs.getString("password"));
+                    s.setEmail         (rs.getString("email"));
+
+                    Timestamp regTs = rs.getTimestamp("registration_date");
+                    s.setRegistrationDate(regTs != null ? regTs.toString() : null);
+
+                    return s;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ DB Error (getStudentById): " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /* ── Update existing student ─────────────────────────────────── */
@@ -123,7 +167,7 @@ public class StudentDAO {
             ps.setString(idx++, student.getDate_of_birth());
             ps.setString(idx++, student.getAddress());
             ps.setString(idx++, student.getGender());
-            ps.setInt(idx++, student.getBatch());
+            ps.setObject(idx++, student.getBatchAsInt());   // Integer — may be null
             ps.setString(idx++, student.getPhone());
 
             if (changePassword) {
@@ -165,42 +209,9 @@ public class StudentDAO {
         return false;
     }
 
-    /* ── Fetch a single student by ID ────────────────────────────── */
-    private static final String SELECT_BY_ID_SQL =
-            "SELECT name, student_id, date_of_birth, address, gender, batch, phone, " +
-                    "password, email, registration_date " +
-                    "FROM students WHERE student_id = ?";
-
-    public Students getStudentById(int studentId) {
-        try (Connection con = DBConnection.getConnection();
-             PreparedStatement ps = con.prepareStatement(SELECT_BY_ID_SQL)) {
-
-            ps.setInt(1, studentId);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    Students s = new Students();
-                    s.setName(rs.getString("name"));
-                    s.setStudent_id(rs.getInt("student_id"));
-                    s.setDate_of_birth(rs.getString("date_of_birth"));
-                    s.setAddress(rs.getString("address"));
-                    s.setGender(rs.getString("gender"));
-                    s.setBatch(rs.getInt("batch"));
-                    s.setPhone(rs.getString("phone"));
-                    s.setPassword(rs.getString("password"));
-                    s.setEmail(rs.getString("email"));
-
-                    Timestamp regTs = rs.getTimestamp("registration_date");
-                    s.setRegistrationDate(regTs != null ? regTs.toString() : null);
-
-                    return s;
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println("❌ DB Error (getStudentById): " + e.getMessage());
-            e.printStackTrace();
-        }
-        return null;
-    }
+    /* ══════════════════════════════════════════════════════════════
+       SUBJECT CRUD
+       ══════════════════════════════════════════════════════════════ */
 
     /* ── Fetch subjects enrolled by a specific student ───────────── */
     private static final String SELECT_SUBJECTS_FOR_STUDENT_SQL =
@@ -219,7 +230,7 @@ public class StudentDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     list.add(new Subject(
-                            rs.getInt("id"),
+                            rs.getInt   ("id"),
                             rs.getString("subject_code"),
                             rs.getString("subject_name")
                     ));
@@ -243,7 +254,7 @@ public class StudentDAO {
 
             while (rs.next()) {
                 list.add(new Subject(
-                        rs.getInt("id"),
+                        rs.getInt   ("id"),
                         rs.getString("subject_code"),
                         rs.getString("subject_name")
                 ));

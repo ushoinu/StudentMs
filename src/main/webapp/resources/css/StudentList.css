@@ -1,85 +1,108 @@
 /* ═══════════════════════════════════════════════════════════════
-   Student Management System — studentList.css
-   Mirrors the tokens and look-and-feel of StudentRegistration.css
+   Student Management System — StudentList.css
    ═══════════════════════════════════════════════════════════════ */
 
-/* ── CSS Variables (mirrors style.css tokens) ─────────────────── */
+/* ── CSS Variables ─────────────────────────────────────────────── */
 :root {
     --body-bg:
             radial-gradient(circle at top left, rgba(37, 99, 235, 0.10), transparent 24%),
             linear-gradient(180deg, #f8fbff 0%, #eef4fa 100%);
-    --text-primary:     #0f172a;
-    --text-secondary:   #475569;
-    --surface-primary:  rgba(255, 255, 255, 0.94);
-    --surface-secondary:rgba(255, 255, 255, 0.92);
-    --surface-solid:    #ffffff;
-    --surface-muted:    #f8fafc;
-    --border-soft:      rgba(148, 163, 184, 0.35);
-    --border-strong:    #94a3b8;
-    --border-darker:    #64748b;
-    --shadow-primary:   0 18px 40px rgba(15, 23, 42, 0.08);
-    --shadow-secondary: 0 14px 32px rgba(15, 23, 42, 0.07);
-    --shadow-hover:     0 8px 16px rgba(15, 23, 42, 0.06);
-    --eyebrow-bg:       #dbeafe;
-    --eyebrow-text:     #1d4ed8;
-    --panel-badge-bg:   #ecfdf5;
-    --panel-badge-text: #047857;
-    --section-label:    #2563eb;
+    --text-primary:         #0f172a;
+    --text-secondary:       #475569;
+    --surface-primary:      rgba(255, 255, 255, 0.94);
+    --surface-secondary:    rgba(255, 255, 255, 0.92);
+    --surface-solid:        #ffffff;
+    --surface-muted:        #f8fafc;
+    --border-soft:          rgba(148, 163, 184, 0.35);
+    --border-strong:        #94a3b8;
+    --border-darker:        #64748b;
+    --shadow-primary:       0 18px 40px rgba(15, 23, 42, 0.08);
+    --shadow-secondary:     0 14px 32px rgba(15, 23, 42, 0.07);
+    --shadow-hover:         0 8px 16px rgba(15, 23, 42, 0.06);
+    --eyebrow-bg:           #dbeafe;
+    --eyebrow-text:         #1d4ed8;
+    --panel-badge-bg:       #ecfdf5;
+    --panel-badge-text:     #047857;
+    --section-label:        #2563eb;
 
-    /* List-specific tokens */
-    --divider-color:    #94a3b8;
-    --accent-stripe:    linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-    --table-head-bg:    #f1f5f9;
-    --table-row-hover:  #f1f5f9;
-    --table-border:     #cbd5e1;
-    --table-border-strong: #94a3b8;
-    --badge-bg:         #dbeafe;
-    --badge-text:       #1d4ed8;
-    --card-border:      #94a3b8;
-    --input-border:     #94a3b8;
-    --input-bg:         #f8fafc;
-    --error-color:      #dc2626;
-    --error-border:     #fca5a5;
-    --error-bg:         #fef2f2;
+    --divider-color:        #94a3b8;
+    --accent-stripe:        linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    --table-head-bg:        #f1f5f9;
+    --table-row-hover:      #f1f5f9;
+    --table-border:         #cbd5e1;
+    --table-border-strong:  #94a3b8;
+    --badge-bg:             #dbeafe;
+    --badge-text:           #1d4ed8;
+    --card-border:          #94a3b8;
+    --input-border:         #94a3b8;
+    --input-bg:             #f8fafc;
+
+    /* ── Message Colors ── */
+    --error-color:          #dc2626;
+    --error-bg:             #fef2f2;
+    --error-border:         #fca5a5;
+
+    --success-color:        #059669;
+    --success-bg:           #ecfdf5;
+    --success-border:       #6ee7b7;
+
+    --warn-color:           #d97706;
+    --warn-bg:              #fffbeb;
+    --warn-border:          #fcd34d;
+
+    --label-color:          #475569;
+
+    --nav-height:           64px;
 }
 
 :root[data-theme='dark'] {
     --body-bg:
             radial-gradient(circle at top left, rgba(59, 130, 246, 0.18), transparent 26%),
             linear-gradient(180deg, #0f172a 0%, #111827 100%);
-    --text-primary:     #e2e8f0;
-    --text-secondary:   #94a3b8;
-    --surface-primary:  rgba(15, 23, 42, 0.92);
-    --surface-secondary:rgba(15, 23, 42, 0.88);
-    --surface-solid:    #111827;
-    --surface-muted:    #1e293b;
-    --border-soft:      rgba(148, 163, 184, 0.25);
-    --border-strong:    #475569;
-    --border-darker:    #334155;
-    --shadow-primary:   0 18px 40px rgba(2, 6, 23, 0.35);
-    --shadow-secondary: 0 14px 32px rgba(2, 6, 23, 0.30);
-    --shadow-hover:     0 8px 16px rgba(2, 6, 23, 0.28);
-    --eyebrow-bg:       rgba(37, 99, 235, 0.18);
-    --eyebrow-text:     #93c5fd;
-    --panel-badge-bg:   rgba(16, 185, 129, 0.18);
-    --panel-badge-text: #6ee7b7;
-    --section-label:    #60a5fa;
+    --text-primary:         #e2e8f0;
+    --text-secondary:       #94a3b8;
+    --surface-primary:      rgba(15, 23, 42, 0.92);
+    --surface-secondary:    rgba(15, 23, 42, 0.88);
+    --surface-solid:        #111827;
+    --surface-muted:        #1e293b;
+    --border-soft:          rgba(148, 163, 184, 0.25);
+    --border-strong:        #475569;
+    --border-darker:        #334155;
+    --shadow-primary:       0 18px 40px rgba(2, 6, 23, 0.35);
+    --shadow-secondary:     0 14px 32px rgba(2, 6, 23, 0.30);
+    --shadow-hover:         0 8px 16px rgba(2, 6, 23, 0.28);
+    --eyebrow-bg:           rgba(37, 99, 235, 0.18);
+    --eyebrow-text:         #93c5fd;
+    --panel-badge-bg:       rgba(16, 185, 129, 0.18);
+    --panel-badge-text:     #6ee7b7;
+    --section-label:        #60a5fa;
 
-    /* List-specific dark overrides */
-    --divider-color:    #475569;
-    --accent-stripe:    linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-    --table-head-bg:    #1e293b;
-    --table-row-hover:  rgba(59, 130, 246, 0.08);
-    --table-border:     #334155;
-    --table-border-strong: #475569;
-    --badge-bg:         rgba(37, 99, 235, 0.18);
-    --badge-text:       #93c5fd;
-    --card-border:      #475569;
-    --input-border:     #475569;
-    --input-bg:         #1e293b;
-    --error-color:      #f87171;
-    --error-border:     #7f1d1d;
-    --error-bg:         #7f1d1d;
+    --divider-color:        #475569;
+    --accent-stripe:        linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    --table-head-bg:        #1e293b;
+    --table-row-hover:      rgba(59, 130, 246, 0.08);
+    --table-border:         #334155;
+    --table-border-strong:  #475569;
+    --badge-bg:             rgba(37, 99, 235, 0.18);
+    --badge-text:           #93c5fd;
+    --card-border:          #475569;
+    --input-border:         #475569;
+    --input-bg:             #1e293b;
+
+    /* ── Message Colors (Dark) ── */
+    --error-color:          #f87171;
+    --error-bg:             rgba(127, 29, 29, 0.4);
+    --error-border:         #7f1d1d;
+
+    --success-color:        #34d399;
+    --success-bg:           rgba(16, 185, 129, 0.15);
+    --success-border:       #047857;
+
+    --warn-color:           #fbbf24;
+    --warn-bg:              rgba(146, 64, 14, 0.25);
+    --warn-border:          #92400e;
+
+    --label-color:          #94a3b8;
 }
 
 /* ── Reset ─────────────────────────────────────────────────────── */
@@ -98,57 +121,58 @@ body {
     line-height: 1.6;
     transition: background 0.3s ease, color 0.3s ease;
 }
-/* ── Page wrapper ──────────────────────────────────────────────── */
+
+/* ── Page Wrapper ──────────────────────────────────────────────── */
 .student-list-wrapper {
-    max-width: 100%;
+    max-width: 1400px;
     margin: 0 auto 64px;
-    padding: 0 20px;
+    padding: 0 24px;
+    padding-top: calc(var(--nav-height) + 32px);
 }
 
 /* ── Card ──────────────────────────────────────────────────────── */
 .list-card {
-    margin-top: 100px;
     position: relative;
     background: var(--surface-primary);
     border: 1.5px solid var(--card-border);
-    border-radius: 14px;
+    border-radius: 16px;
     box-shadow: var(--shadow-primary);
-    padding: 0 0 36px;
+    padding: 0 0 40px;
     overflow: hidden;
     transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Accent stripe at top of card */
 .list-card::before {
     content: '';
     display: block;
     height: 5px;
     background: var(--accent-stripe);
-    border-radius: 14px 14px 0 0;
+    border-radius: 16px 16px 0 0;
 }
 
 /* ── Header ────────────────────────────────────────────────────── */
 .list-header {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     gap: 16px;
-    margin: 32px 40px 6px;
+    margin: 32px 40px 24px;
     flex-wrap: wrap;
-    padding-bottom: 20px;
-    border-bottom: 2px solid var(--divider-color);
+    padding-bottom: 24px;
+    border-bottom: 1.5px solid var(--divider-color);
 }
 
 .list-title {
     font-size: 26px;
-    font-weight: 750;
+    font-weight: 800;
+    letter-spacing: -0.02em;
     line-height: 1.2;
     color: var(--text-primary);
     transition: color 0.3s ease;
 }
 
 .list-subtitle {
-    margin-top: 6px;
+    margin-top: 5px;
     font-size: 14px;
     color: var(--text-secondary);
     transition: color 0.3s ease;
@@ -158,8 +182,8 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 30px;
-    padding: 0 14px;
+    min-height: 32px;
+    padding: 0 16px;
     border-radius: 999px;
     background-color: var(--panel-badge-bg);
     color: var(--panel-badge-text);
@@ -167,23 +191,129 @@ body {
     font-weight: 700;
     white-space: nowrap;
     border: 1.5px solid var(--card-border);
+    flex-shrink: 0;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .list-divider {
-    margin: 24px 40px 24px;
-    height: 2px;
+    margin: 0 40px 24px;
+    height: 1.5px;
     background: var(--divider-color);
     transition: background 0.3s ease;
 }
 
-/* ── Table wrapper ─────────────────────────────────────────────── */
+/* ── Message Panel Styles ──────────────────────────────────────── */
+
+/* Main message container - using class and ID both */
+.message,
+#listForm\:messagePanel,
+#listForm\:modalMessagePanel {
+    margin: 0 40px 16px 40px;
+}
+
+/* The <ul> that h:messages generates */
+.message ul,
+#listForm\:messagePanel ul,
+#listForm\:modalMessagePanel ul,
+ul.messages {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+}
+
+/* Each message <li> - DIRECT STYLING */
+.message li,
+#listForm\:messagePanel li,
+#listForm\:modalMessagePanel li,
+li.feedbackPanelERROR,
+li.feedbackPanelINFO,
+li.feedbackPanelWARN,
+ul.messages li {
+    display: block !important;
+    padding: 13px 18px !important;
+    border-radius: 9px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    line-height: 1.5 !important;
+    border: 1.5px solid transparent !important;
+    margin: 0 !important;
+}
+
+/* ── ERROR Messages (Red) ── DIRECT TARGETING ── */
+li.feedbackPanelERROR,
+.message li.feedbackPanelERROR,
+#listForm\:messagePanel li.feedbackPanelERROR,
+#listForm\:modalMessagePanel li.feedbackPanelERROR,
+.message li[class*="error"],
+#listForm\:messagePanel li[class*="error"] {
+    background: #fef2f2 !important;
+    color: #dc2626 !important;
+    border-color: #fca5a5 !important;
+}
+
+/* ── INFO / SUCCESS Messages (Green) ── DIRECT TARGETING ── */
+li.feedbackPanelINFO,
+.message li.feedbackPanelINFO,
+#listForm\:messagePanel li.feedbackPanelINFO,
+#listForm\:modalMessagePanel li.feedbackPanelINFO,
+.message li[class*="info"],
+#listForm\:messagePanel li[class*="info"],
+.message li[class*="success"],
+#listForm\:messagePanel li[class*="success"] {
+    background: #ecfdf5 !important;
+    color: #059669 !important;
+    border-color: #6ee7b7 !important;
+}
+
+/* ── WARNING Messages (Yellow/Amber) ── DIRECT TARGETING ── */
+li.feedbackPanelWARN,
+.message li.feedbackPanelWARN,
+#listForm\:messagePanel li.feedbackPanelWARN,
+#listForm\:modalMessagePanel li.feedbackPanelWARN,
+.message li[class*="warn"],
+#listForm\:messagePanel li[class*="warn"] {
+    background: #fffbeb !important;
+    color: #d97706 !important;
+    border-color: #fcd34d !important;
+}
+
+/* ── Fallback: Any list item inside message panel ── */
+.message li,
+#listForm\:messagePanel li,
+#listForm\:modalMessagePanel li {
+    background: var(--surface-muted) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-soft) !important;
+}
+
+/* ── Force override for any message ── */
+#listForm\:messagePanel ul li,
+#listForm\:modalMessagePanel ul li,
+.message ul li {
+    display: block !important;
+    padding: 13px 18px !important;
+    border-radius: 9px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    line-height: 1.5 !important;
+}
+
+/* Modal message specific margin */
+#listForm\:modalMessagePanel {
+    margin-top: 20px !important;
+}
+
+/* ── Table Wrapper ─────────────────────────────────────────────── */
 .table-scroll {
     margin: 0 40px;
     overflow-x: auto;
     border: 1.5px solid var(--table-border-strong);
-    border-radius: 10px;
+    border-radius: 12px;
     transition: border-color 0.3s ease;
+    -webkit-overflow-scrolling: touch;
 }
 
 /* ── Table ─────────────────────────────────────────────────────── */
@@ -192,6 +322,7 @@ body {
     border-collapse: collapse;
     font-size: 14px;
     background: var(--surface-solid);
+    min-width: 700px;
     transition: background 0.3s ease;
 }
 
@@ -207,13 +338,14 @@ body {
 .student-table thead th {
     background: var(--table-head-bg);
     color: var(--text-secondary);
-    font-size: 12px;
+    font-size: 11.5px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.06em;
     position: sticky;
     top: 0;
-    border-bottom: 2.5px solid var(--table-border-strong);
+    border-bottom: 2px solid var(--table-border-strong);
+    z-index: 1;
 }
 
 .student-table tbody tr {
@@ -228,10 +360,11 @@ body {
     border-bottom: none;
 }
 
-/* ── Cell helpers ──────────────────────────────────────────────── */
+/* ── Cell Helpers ──────────────────────────────────────────────── */
 .cell-id {
     font-weight: 700;
     color: var(--section-label);
+    font-variant-numeric: tabular-nums;
 }
 
 .cell-name {
@@ -240,11 +373,12 @@ body {
 
 .cell-address {
     white-space: normal;
-    max-width: 260px;
+    max-width: 220px;
+    min-width: 140px;
     color: var(--text-secondary);
+    line-height: 1.45;
 }
 
-/* Class / Batch badge */
 .batch-badge {
     display: inline-flex;
     align-items: center;
@@ -260,16 +394,23 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-/* ── Empty state ───────────────────────────────────────────────── */
+/* ── Empty State ───────────────────────────────────────────────── */
 .empty-state {
-    padding: 48px 16px;
+    padding: 64px 24px;
     text-align: center;
     color: var(--text-secondary);
     font-size: 15px;
     transition: color 0.3s ease;
 }
 
-/* ── Action column buttons ─────────────────────────────────────── */
+.empty-state p::before {
+    content: '📭';
+    display: block;
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+/* ── Action Column Buttons ─────────────────────────────────────── */
 .action-buttons {
     display: flex;
     align-items: center;
@@ -293,6 +434,7 @@ body {
     cursor: pointer;
     transition: background-color 0.2s ease, border-color 0.2s ease,
     color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+    white-space: nowrap;
 }
 
 .btn-edit {
@@ -305,19 +447,22 @@ body {
     background-color: #2563eb;
     color: #ffffff;
     border-color: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28);
 }
 
 .btn-delete {
     background-color: transparent;
-    color: var(--error-color, #dc2626);
-    border-color: var(--error-border, #fca5a5);
+    color: var(--error-color);
+    border-color: var(--error-border);
 }
 
 .btn-delete:hover {
-    background-color: var(--error-bg, #fef2f2);
+    background-color: var(--error-bg);
+    transform: translateY(-1px);
 }
 
-/* ── Edit Modal overlay ────────────────────────────────────────── */
+/* ── Edit Modal ────────────────────────────────────────────────── */
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -326,10 +471,12 @@ body {
     align-items: center;
     justify-content: center;
     padding: 20px;
-    background: rgba(15, 23, 42, 0.50);
+    background: rgba(15, 23, 42, 0.55);
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.2s ease, visibility 0.2s ease;
+    transition: opacity 0.22s ease, visibility 0.22s ease;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 .modal-overlay.show {
@@ -337,20 +484,18 @@ body {
     visibility: visible;
 }
 
-/* ── Modal box ─────────────────────────────────────────────────── */
 .modal-box {
     width: 100%;
-    max-width: 640px;
+    max-width: 660px;
     max-height: 90vh;
     overflow-y: auto;
     background: var(--surface-solid);
     border: 1.5px solid var(--card-border);
-    border-radius: 14px;
+    border-radius: 16px;
     box-shadow: var(--shadow-primary);
-    padding: 28px 32px 24px;
-    transform: translateY(16px) scale(0.98);
-    transition: background 0.3s ease, border-color 0.3s ease,
-    transform 0.2s ease;
+    padding: 32px 36px 28px;
+    transform: translateY(20px) scale(0.97);
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.22s ease;
 }
 
 .modal-overlay.show .modal-box {
@@ -358,8 +503,9 @@ body {
 }
 
 .modal-title {
-    font-size: 20px;
-    font-weight: 750;
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
     color: var(--text-primary);
     transition: color 0.3s ease;
 }
@@ -371,12 +517,12 @@ body {
     transition: color 0.3s ease;
 }
 
-/* ── Modal form grid ───────────────────────────────────────────── */
+/* ── Modal Form Grid ───────────────────────────────────────────── */
 .modal-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-top: 20px;
+    gap: 18px;
+    margin-top: 24px;
 }
 
 .modal-span-2 {
@@ -390,9 +536,11 @@ body {
 }
 
 .modal-grid label {
-    font-size: 13px;
+    font-size: 12.5px;
     font-weight: 700;
-    color: var(--label-color, var(--text-secondary));
+    color: var(--label-color);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
     transition: color 0.3s ease;
 }
 
@@ -401,10 +549,10 @@ body {
 .modal-grid select,
 .modal-grid input {
     width: 100%;
-    min-height: 42px;
-    padding: 0 12px;
+    min-height: 44px;
+    padding: 0 14px;
     border: 1.5px solid var(--input-border);
-    border-radius: 8px;
+    border-radius: 9px;
     background: var(--input-bg);
     color: var(--text-primary);
     font-size: 14px;
@@ -417,22 +565,23 @@ body {
 .modal-grid input:focus,
 .modal-grid select:focus {
     border-color: #2563eb;
-    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.22);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
 }
 
 .modal-grid input:disabled {
-    opacity: 0.65;
+    opacity: 0.55;
     cursor: not-allowed;
+    background: var(--surface-muted);
 }
 
-/* ── Modal action buttons ──────────────────────────────────────── */
+/* ── Modal Actions ─────────────────────────────────────────────── */
 .modal-actions {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
-    margin-top: 24px;
-    padding-top: 20px;
-    border-top: 2px solid var(--divider-color);
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1.5px solid var(--divider-color);
 }
 
 .btn-cancel {
@@ -448,60 +597,169 @@ body {
 .btn-update {
     background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
     color: #ffffff;
-    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.24);
-    min-height: 36px;
-    padding: 0 18px;
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.30);
+    min-height: 40px;
+    padding: 0 22px;
     border: 1.5px solid transparent;
 }
 
 .btn-update:hover {
     background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.38);
 }
 
-/* ── Responsive ────────────────────────────────────────────────── */
-@media (max-width: 980px) {
+/* ── Responsive — Tablet (max 1024px) ─────────────────────────── */
+@media (max-width: 1024px) {
+
     .student-list-wrapper {
-        padding: 0 16px;
-    }
-}
-
-@media (max-width: 640px) {
-    .list-card {
-        margin-top: 24px;
+        padding: 0 20px;
+        padding-top: calc(var(--nav-height) + 28px);
     }
 
     .list-header,
     .list-divider,
-    .table-scroll {
-        margin-left: 20px;
-        margin-right: 20px;
+    .table-scroll,
+    .message,
+    #listForm\:messagePanel {
+        margin-left: 28px;
+        margin-right: 28px;
     }
 
-    .list-title {
-        font-size: 22px;
+    .list-card {
+        padding-bottom: 32px;
     }
+}
+
+/* ── Responsive — Mobile (max 640px) ──────────────────────────── */
+@media (max-width: 640px) {
+
+    .student-list-wrapper {
+        padding: 0 14px;
+        padding-top: calc(var(--nav-height) + 20px);
+        margin-bottom: 48px;
+    }
+
+    .list-card {
+        border-radius: 12px;
+        padding-bottom: 28px;
+    }
+
+    .list-header {
+        margin: 24px 20px 20px;
+        padding-bottom: 18px;
+        gap: 12px;
+    }
+
+    .list-title    { font-size: 20px; }
+    .list-subtitle { font-size: 13px; }
+
+    .total-badge {
+        font-size: 12px;
+        min-height: 28px;
+        padding: 0 12px;
+    }
+
+    .list-divider { margin: 0 20px 20px; }
+
+    .table-scroll,
+    .message,
+    #listForm\:messagePanel {
+        margin: 0 14px;
+    }
+
+    .table-scroll {
+        border-radius: 10px;
+    }
+
+    .student-table { min-width: 560px; }
 
     .student-table th,
     .student-table td {
-        padding: 10px 12px;
+        padding: 11px 13px;
         font-size: 13px;
     }
 
-    .modal-box {
-        padding: 22px 18px 18px;
-    }
-
-    .modal-grid {
-        grid-template-columns: 1fr;
-    }
+    .student-table thead th { font-size: 10.5px; }
 
     .action-buttons {
         flex-direction: column;
         align-items: stretch;
+        gap: 6px;
     }
 
     .btn-edit,
     .btn-delete {
         width: 100%;
+        min-height: 32px;
+        font-size: 12.5px;
+    }
+
+    .modal-overlay {
+        padding: 14px;
+        align-items: flex-end;
+    }
+
+    .modal-box {
+        padding: 24px 20px 20px;
+        border-radius: 16px 16px 0 0;
+        max-height: 92vh;
+    }
+
+    .modal-title { font-size: 18px; }
+
+    .modal-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .modal-span-2 { grid-column: 1; }
+
+    .modal-actions {
+        flex-direction: column-reverse;
+        gap: 8px;
+    }
+
+    .btn-cancel,
+    .btn-update {
+        width: 100%;
+        justify-content: center;
+        min-height: 44px;
+        font-size: 14px;
+    }
+}
+
+/* ── Responsive — Very Small (max 400px) ──────────────────────── */
+@media (max-width: 400px) {
+
+    .list-header,
+    .list-divider { margin-left: 16px; margin-right: 16px; }
+
+    .table-scroll { margin: 0 10px; }
+}
+
+/* ── Scrollbar (Webkit) ────────────────────────────────────────── */
+.table-scroll::-webkit-scrollbar { height: 5px; }
+.table-scroll::-webkit-scrollbar-track {
+    background: var(--surface-muted);
+    border-radius: 0 0 12px 12px;
+}
+.table-scroll::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: 4px;
+}
+
+.modal-box::-webkit-scrollbar { width: 5px; }
+.modal-box::-webkit-scrollbar-track { background: transparent; }
+.modal-box::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: 4px;
+}
+
+/* ── Reduced Motion ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
     }
 }
